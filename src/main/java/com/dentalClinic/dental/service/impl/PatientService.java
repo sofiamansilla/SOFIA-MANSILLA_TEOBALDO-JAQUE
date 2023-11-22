@@ -4,7 +4,6 @@ import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
 import com.dentalClinic.dental.entity.Patient;
-import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.PatientRepository;
 import com.dentalClinic.dental.service.IPatientService;
 import com.dentalClinic.dental.utils.JsonPrinter;
@@ -80,7 +79,6 @@ public class PatientService implements IPatientService {
         return patientsOutputDto;
     }
 
-
     /*
     searchPatientForId: This method retrieve a patient's information from
     the database using their ID.
@@ -134,8 +132,6 @@ public class PatientService implements IPatientService {
     System.out.println("Patient not found.");
     }
     */
-
-
     @Override
     public PatientOutputDto updatePatient(PatientUpdateInputDto patient) {
         Patient patientReceived = modelMapper.map(patient, Patient.class);
@@ -169,6 +165,14 @@ public class PatientService implements IPatientService {
         return patientOutputDto;
     }
 
+    /*
+    deletePatient: This method deletes a patient from the database by its ID;
+    Parameters id: The ID of the patient to delete;
+    Return Value: Void;
+    Usage Example:
+    PatientService patientService = new PatientService();
+    patientService.deletePatient(1L);
+    */
     @Override
     public void deletePatient(Long id) {
         if (patientRepository.findById(id).orElse(null) != null) {
@@ -184,8 +188,22 @@ public class PatientService implements IPatientService {
 
     }
 
+    /*
+    searchPatientForDni: Searches for a patient by their DNI and returns a
+    PatientOutputDto object containing the patient's information.
+    Parameters dni: The DNI of the patient to search for.
+    Return Value: A PatientOutputDto object containing the patient's
+    information, or null if the patient is not found.
+    Usage Example: PatientOutputDto patientOutputDto = patientService
+    .searchPatientForDni(12345678);
+    if (patientOutputDto != null) {
+    // Process the retrieved patient information
+    } else {
+    // Patient not found
+    }
+    */
     @Override
-    public PatientOutputDto searchPatientForDni (int dni){
+    public PatientOutputDto searchPatientForDni(int dni) {
         return modelMapper.map(patientRepository.findByDni(dni),
                 PatientOutputDto.class);
 
@@ -197,9 +215,10 @@ public class PatientService implements IPatientService {
                         Patient::setAddress));
         modelMapper.typeMap(Patient.class, PatientOutputDto.class)
                 .addMappings(modelMapper -> modelMapper.map(Patient::getAddress,
-                        PatientOutputDto::set));
+                        PatientOutputDto::setAddressOutputDto));
         modelMapper.typeMap(PatientUpdateInputDto.class, Patient.class)
-                .addMappings(mapper -> mapper.map(PatientUpdateInputDto::getDomicilioModificacionEntradaDto, Patient::setAddress));
+                .addMappings(mapper -> mapper.map(PatientUpdateInputDto::getAddressUpdateInputDto,
+                        Patient::setAddress));
 
     }
 

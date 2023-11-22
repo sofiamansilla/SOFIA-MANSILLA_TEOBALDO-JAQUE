@@ -13,20 +13,28 @@ public class PatientOutputDto {
     private String lastName;
     private String dni;
     private LocalDate dateOfEntry;
-    private AddressInputDto addressInputDto;
-
+    private AddressOutputDto addressOutputDto;
 
     public PatientOutputDto() {
     }
 
-    public PatientOutputDto(Long id, String name, String lastName, String dni, LocalDate dateOfEntry, AddressInputDto addressInputDto) {
+    public PatientOutputDto(String name, String lastName, String dni, LocalDate dateOfEntry, AddressOutputDto addressOutputDto) {
+        this.name = name;
+        this.lastName = lastName;
+        this.dni = dni;
+        this.dateOfEntry = dateOfEntry;
+        this.addressOutputDto = addressOutputDto;
+    }
+
+    public PatientOutputDto(Long id, String name, String lastName, String dni, LocalDate dateOfEntry, AddressOutputDto addressOutputDto) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.dni = dni;
         this.dateOfEntry = dateOfEntry;
-        this.addressInputDto = addressInputDto;
+        this.addressOutputDto = addressOutputDto;
     }
+
 
     public Long getId() {
         return id;
@@ -68,15 +76,11 @@ public class PatientOutputDto {
         this.dateOfEntry = dateOfEntry;
     }
 
-    public AddressInputDto getAddressInputDto() {
-        return addressInputDto;
+    public AddressOutputDto getAddressOutputDto() {
+        return addressOutputDto;
     }
 
-    public void setAddressInputDto(AddressInputDto addressInputDto) {
-        this.addressInputDto = addressInputDto;
+    public void setAddressOutputDto(AddressOutputDto addressOutputDto) {
+        this.addressOutputDto = addressOutputDto;
     }
-
-
-
-
 }
