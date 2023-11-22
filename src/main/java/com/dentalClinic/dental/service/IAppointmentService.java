@@ -12,13 +12,16 @@ import java.util.List;
 public interface IAppointmentService {
 
 
-    AppointmentOutputDto registerAppointment (AppointmentInputDto appointment);
+    AppointmentOutputDto registerAppointment(AppointmentInputDto appointment);
+
     List<AppointmentOutputDto> listAppointments();
 
     AppointmentOutputDto searchAppointmentForId(Long id);
 
     AppointmentOutputDto updateAppointment(AppointmentUpdateInputDto appointment);
+
     void deleteAppointment(Long id);
+
 
 
 }
