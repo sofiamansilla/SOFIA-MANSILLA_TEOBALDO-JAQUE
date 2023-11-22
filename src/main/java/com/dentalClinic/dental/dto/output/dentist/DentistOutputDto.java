@@ -4,7 +4,7 @@ package com.dentalClinic.dental.dto.output.dentist;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class dentistOutputDto {
+public class DentistOutputDto {
 
 
     private Long id;
@@ -13,10 +13,10 @@ public class dentistOutputDto {
     private String lastName;
 
 
-    public dentistOutputDto() {
+    public DentistOutputDto() {
     }
 
-    public dentistOutputDto(Long id, String licenceNumber, String name, String lastName) {
+    public DentistOutputDto(Long id, String licenceNumber, String name, String lastName) {
         this.id = id;
         this.licenceNumber = licenceNumber;
         this.name = name;

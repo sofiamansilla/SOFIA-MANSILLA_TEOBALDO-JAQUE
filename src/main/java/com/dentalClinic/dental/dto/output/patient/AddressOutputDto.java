@@ -2,10 +2,8 @@ package com.dentalClinic.dental.dto.output.patient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.time.LocalDate;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class addressOutputDto {
+public class AddressOutputDto {
 
     private Long id;
     private String street;
@@ -13,10 +11,10 @@ public class addressOutputDto {
     private String locality;
     private String city;
 
-    public addressOutputDto() {
+    public AddressOutputDto() {
     }
 
-    public addressOutputDto(Long id, String street, int number, String locality, String city) {
+    public AddressOutputDto(Long id, String street, int number, String locality, String city) {
         this.id = id;
         this.street = street;
         this.number = number;

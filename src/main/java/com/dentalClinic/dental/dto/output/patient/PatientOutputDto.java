@@ -1,13 +1,12 @@
 package com.dentalClinic.dental.dto.output.patient;
 
 import com.dentalClinic.dental.dto.input.patient.AddressInputDto;
-import com.dentalClinic.dental.entity.Address;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class patientOutputDto {
+public class PatientOutputDto {
 
     private Long id;
     private String name;
@@ -17,10 +16,10 @@ public class patientOutputDto {
     private AddressInputDto addressInputDto;
 
 
-    public patientOutputDto() {
+    public PatientOutputDto() {
     }
 
-    public patientOutputDto(Long id, String name, String lastName, String dni, LocalDate dateOfEntry, AddressInputDto addressInputDto) {
+    public PatientOutputDto(Long id, String name, String lastName, String dni, LocalDate dateOfEntry, AddressInputDto addressInputDto) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

@@ -2,25 +2,23 @@ package com.dentalClinic.dental.dto.output.appointment;
 
 import com.dentalClinic.dental.dto.input.dentist.DentistInputDto;
 import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
-import com.dentalClinic.dental.entity.Dentist;
-import com.dentalClinic.dental.entity.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class appointmentOutputDto {
+public class AppointmentOutputDto {
 
     private Long id;
     private LocalDateTime dateAndTime;
     private DentistInputDto dentistInputDto;
     private PatientInputDto patientInputDto;
 
-    public appointmentOutputDto() {
+    public AppointmentOutputDto() {
     }
 
-    public appointmentOutputDto(Long id, LocalDateTime dateAndTime,
+    public AppointmentOutputDto(Long id, LocalDateTime dateAndTime,
                                 DentistInputDto dentistInputDto,
                                 PatientInputDto patientInputDto) {
         this.id = id;
