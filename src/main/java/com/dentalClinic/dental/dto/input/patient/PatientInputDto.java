@@ -93,4 +93,6 @@ public class PatientInputDto {
     public void setAddressInputDto(AddressInputDto addressInputDto) {
         this.addressInputDto = addressInputDto;
     }
+
+
 }
