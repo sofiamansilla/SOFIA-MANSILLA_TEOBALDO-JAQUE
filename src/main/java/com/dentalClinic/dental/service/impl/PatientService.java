@@ -23,13 +23,13 @@ public class PatientService implements IPatientService {
     private final Logger LOGGER =
             (Logger) LoggerFactory.getLogger(PatientService.class);
 
-    private PatientRepository patientRepository;
+    private PatientRepository patientIRepository;
     private ModelMapper modelMapper;
 
     @Autowired
     public PatientService(PatientRepository patientRepository,
                           ModelMapper modelMapper) {
-        this.patientRepository = patientRepository;
+        this.patientIRepository = patientRepository;
         this.modelMapper = modelMapper;
         configureMapping();
     }
@@ -49,7 +49,7 @@ public class PatientService implements IPatientService {
         LOGGER.info("PatientInputDto: " + JsonPrinter.toString(patient));
         Patient patientEntity = modelMapper.map(patient, Patient.class);
 
-        Patient patientToPersist = patientRepository.save(patientEntity);
+        Patient patientToPersist = patientIRepository.save(patientEntity);
         PatientOutputDto patientOutputDto = modelMapper.map(patientToPersist,
                 PatientOutputDto.class);
         LOGGER.info("PatientOutputDto :" + JsonPrinter.toString(patientOutputDto));
@@ -67,7 +67,7 @@ public class PatientService implements IPatientService {
     @Override
     public List<PatientOutputDto> listPatients() {
         List<PatientOutputDto> patientsOutputDto =
-                patientRepository.findAll()
+                patientIRepository.findAll()
                         .stream()
                         .map(patient -> modelMapper.map(patient,
                                 PatientOutputDto.class))
@@ -95,7 +95,7 @@ public class PatientService implements IPatientService {
  */
     @Override
     public PatientOutputDto searchPatientForId(Long id) {
-        Patient searchedPatient = patientRepository.findById(id).orElse(null);
+        Patient searchedPatient = patientIRepository.findById(id).orElse(null);
         PatientOutputDto patientFound = null;
 
         if (searchedPatient != null) {
@@ -136,13 +136,13 @@ public class PatientService implements IPatientService {
     public PatientOutputDto updatePatient(PatientUpdateInputDto patient) {
         Patient patientReceived = modelMapper.map(patient, Patient.class);
         Patient patientToUpdate =
-                patientRepository.findById(patientReceived.getId()).orElse(null);
+                patientIRepository.findById(patientReceived.getId()).orElse(null);
 
         PatientOutputDto patientOutputDto = null;
 
         if (patientToUpdate != null) {
             patientToUpdate = patientReceived;
-            patientRepository.save(patientToUpdate);
+            patientIRepository.save(patientToUpdate);
 
             patientOutputDto = modelMapper.map(patientToUpdate,
                     PatientOutputDto.class);
@@ -175,8 +175,8 @@ public class PatientService implements IPatientService {
     */
     @Override
     public void deletePatient(Long id) {
-        if (patientRepository.findById(id).orElse(null) != null) {
-            patientRepository.deleteById(id);
+        if (patientIRepository.findById(id).orElse(null) != null) {
+            patientIRepository.deleteById(id);
             LOGGER.warn("The patient with id: " + id + "has been deleted");
             /*LOGGER.warn("Se ha eliminado el paciente con id: {}", id);*/
         } else {
@@ -204,7 +204,7 @@ public class PatientService implements IPatientService {
     */
     @Override
     public PatientOutputDto searchPatientForDni(int dni) {
-        return modelMapper.map(patientRepository.findByDni(dni),
+        return modelMapper.map(patientIRepository.findByDni(dni),
                 PatientOutputDto.class);
 
     }
