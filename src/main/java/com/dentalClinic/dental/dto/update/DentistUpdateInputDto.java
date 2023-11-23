@@ -9,24 +9,23 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DentistUpdateInputDto {
 
-    @NotNull
+    @NotBlank(message = "The ID of the dentist must be specified")
     private Long id;
 
-
-
-    @NotNull(message = "The dentist's licence number can not be null")
-    @NotBlank(message = "The dentist's license must be specified")
-    @Size(min = 10, message = "The field must have at least 10 characters")
+    @NotBlank(message = "The dentist's license number must be specified")
+    @Size(min = 8, max = 20, message = "The licence number is incorrect, " +
+            "this one must have at least 8 characters")
     private String licenceNumber;
 
-    @Size(max = 50, message = "The dentist's name must be up to 50 characters long")
-    @NotNull(message = "El nombre de odontólogo no puede ser nulo")
-    @NotBlank(message = "Debe especificarse el nombre del odontólogo")
+    @Size(min = 2, max = 50, message = "Please make sure your name is at " +
+            "least 2 characters and no more than 50" +
+            "characters long")
+    @NotBlank(message = "The dentist's name must be specified")
     private String name;
 
-    @Size(max = 50, message = "El apellido de odontólogo debe tener hasta 50 caracteres")
-    @NotNull(message = "El apellido de odontólogo no puede ser nulo")
-    @NotBlank(message = "Debe especificarse el apellido del odontólogo")
+    @Size(max = 50, message = "Please make sure your lastname is at least 2 " +
+            "characters and no more than 50")
+    @NotBlank(message = "The dentist's last name must be specified")
     private String lastName;
 
 

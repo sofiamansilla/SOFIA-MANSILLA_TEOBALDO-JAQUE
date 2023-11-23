@@ -14,19 +14,16 @@ import java.time.LocalDate;
     @JsonIgnoreProperties(ignoreUnknown = true)
     public class AppointmentInputDto {
 
-
-        @FutureOrPresent(message = "La fecha no puede ser anterior al día de hoy")
-        @NotNull(message = "Debe especificarse la fecha de ingreso del paciente")
+        @FutureOrPresent(message = "The date must be on or after today.")
+        @NotBlank(message = "The address must be specified")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         private LocalDate dateAndTime;
 
-        @NotNull(message = "sss")
+        @NotNull(message = "A dentist must be specified")
         @Valid
-
         private Dentist dentist;
 
-
-        @NotNull(message = "sss")
+        @NotNull(message = "A patient must be specified")
         @Valid
         private Patient patient;
 

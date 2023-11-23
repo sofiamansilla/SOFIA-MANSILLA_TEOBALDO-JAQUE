@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.Documented;
 import java.util.List;
 
 
@@ -43,7 +44,6 @@ public class PatientService implements IPatientService {
     PatientOutputDto patientOutputDto = patientService.registerPatient
     (patientInputDto);
      */
-
     @Override
     public PatientOutputDto registerPatient(PatientInputDto patient) {
         LOGGER.info("PatientInputDto: " + JsonPrinter.toString(patient));

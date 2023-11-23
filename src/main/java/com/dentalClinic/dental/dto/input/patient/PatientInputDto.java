@@ -14,29 +14,29 @@ import java.time.LocalDate;
 public class PatientInputDto {
 
 
-    @NotNull(message = "The dentist's licence number can not be null")
-    @NotBlank(message = "The dentist's license must be specified")
-    @Size(min = 10, message = "The field must have at least 10 characters")
+    @Size(min = 2, max = 50, message = "Please make sure your name is at " +
+            "least 2 characters and no more than 50" +
+            "characters long")
+    @NotBlank(message = "The patient's name must be specified")
     private String name;
 
-
-    @NotNull(message = "The dentist's licence number can not be null")
-    @NotBlank(message = "The dentist's license must be specified")
-    @Size(min = 10, message = "The field must have at least 10 characters")
+    @Size(max = 50, message = "Please make sure your lastname is at least 2 " +
+            "characters and no more than 50")
+    @NotBlank(message = "The patient's last name must be specified")
     private String lastName;
 
 
-    @NotNull(message = "The dentist's licence number can not be null")
-    @NotBlank(message = "The dentist's license must be specified")
-    @Size(min = 10, message = "The field must have at least 10 characters")
+    @NotBlank(message = "The National Identity Document (DNI) must be " +
+            "specified")
+    @Size(min = 8, max = 13, message = "The DNI is invalid. It must be " +
+            "between 8 and 13 digits long")
     private String dni;
 
 
-    @FutureOrPresent(message = "La fecha no puede ser anterior al día de hoy")
-    @NotNull(message = "Debe especificarse la fecha de ingreso del paciente")
+    @FutureOrPresent(message = "The date must be on or after today")
+    @NotNull(message = "The date of entry must be specified")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfEntry;
-
 
     @NotNull
     @Valid
@@ -46,7 +46,9 @@ public class PatientInputDto {
     public PatientInputDto() {
     }
 
-    public PatientInputDto(String name, String lastName, String dni, LocalDate dateOfEntry, AddressInputDto addressInputDto) {
+    public PatientInputDto(String name, String lastName, String dni,
+                           LocalDate dateOfEntry,
+                           AddressInputDto addressInputDto) {
         this.name = name;
         this.lastName = lastName;
         this.dni = dni;

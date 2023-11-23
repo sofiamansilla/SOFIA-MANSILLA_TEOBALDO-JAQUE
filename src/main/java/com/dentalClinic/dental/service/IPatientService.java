@@ -4,10 +4,10 @@ import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
 
+import java.lang.annotation.Documented;
 import java.util.List;
 
 public interface IPatientService {
-
 
     PatientOutputDto registerPatient(PatientInputDto patient);
 

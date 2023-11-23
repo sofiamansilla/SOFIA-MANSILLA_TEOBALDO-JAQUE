@@ -6,38 +6,37 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressUpdateInputDto {
 
-    @NotNull
+    @NotBlank(message = "The ID of the address must be specified")
     private Long id;
-
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
-
-
+// Tienen que ir validaciones en el modificador?
+    @NotBlank(message = "A street must be specified")
     private String street;
 
-    @NotNull(message = "ss")
-    @Digits(integer = 8, fraction = 0, message = "El número debe tener como máximo 8 dígitos")
-    @NotBlank(message = "ss")
+    @Digits(integer = 8, fraction = 0, message = "The street number will only" +
+            " be valid if it has less than 8 digits")
+    @NotBlank(message = "The street number must be specified")
     private int number;
 
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
-
+    @NotBlank(message = "The locality must be specified")
+    @Size(min = 1, max = 90, message = "The locality will only be valid if it" +
+            " has less than 90 characters")
     private String locality;
 
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
-
+    @NotBlank(message = "The city must be specified")
+    @Size(min = 1, max = 90, message = "The city will only be valid if it" +
+            " has less than 90 characters")
     private String city;
 
     public AddressUpdateInputDto() {
     }
 
-    public AddressUpdateInputDto(Long id, String street, int number, String locality, String city) {
+    public AddressUpdateInputDto(Long id, String street, int number,
+                                 String locality, String city) {
         this.id = id;
         this.street = street;
         this.number = number;

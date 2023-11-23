@@ -16,36 +16,41 @@ import java.time.LocalDate;
 public class PatientUpdateInputDto {
 
 
-    @NotNull(message = "Debe proveerse el id del paciente que se desea modificar")
+    @NotBlank(message = "The ID of the patient must be specified")
     private Long id;
 
-    @NotNull(message = "El nombre del paciente no puede ser nulo")
-    @NotBlank(message = "Debe especificarse el nombre del paciente")
-    @Size(max = 50, message = "El nombre debe tener hasta 50 caracteres")
+    @Size(min = 2, max = 50, message = "Please make sure your name is at " +
+            "least 2 characters and no more than 50" +
+            "characters long")
+    @NotBlank(message = "The patient's name must be specified")
     private String name;
 
-    @Size(max = 50, message = "El apellido debe tener hasta 50 caracteres")
-    @NotNull(message = "El apellido del paciente no puede ser nulo")
-    @NotBlank(message = "Debe especificarse el apellido del paciente")
+    @Size(max = 50, message = "Please make sure your lastname is at least 2 " +
+            "characters and no more than 50")
+    @NotBlank(message = "The patient's last name must be specified")
     private String lastName;
 
-    @NotNull(message = "El dni del paciente no puede ser nulo")
-    @Size(max = 12, message = "El nombre debe tener hasta 12 digitos")
+    @NotBlank(message = "The National Identity Document (DNI) must be " +
+            "specified")
+    @Size(min = 8, max = 13, message = "The DNI is invalid. It must be " +
+            "between 8 and 13 digits long")
     private Integer dni;
 
-    @FutureOrPresent(message = "La fecha no puede ser anterior al día de hoy")
-    @NotNull(message = "Debe especificarse la fecha de ingreso del paciente")
+    @FutureOrPresent(message = "The date must be on or after today")
+    @NotNull(message = "The date of entry must be specified")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfEntry;
 
-    @NotNull(message = "El domicilio del paciente no puede ser nulo")
+    @NotNull(message = "An address must be specified")
     @Valid
     private AddressUpdateInputDto addressUpdateInputDto;
 
     public PatientUpdateInputDto() {
     }
 
-    public PatientUpdateInputDto(Long id, String name, String lastName, Integer dni, LocalDate dateOfEntry, AddressUpdateInputDto addressUpdateInputDto) {
+    public PatientUpdateInputDto(Long id, String name, String lastName,
+                                 Integer dni, LocalDate dateOfEntry,
+                                 AddressUpdateInputDto addressUpdateInputDto) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

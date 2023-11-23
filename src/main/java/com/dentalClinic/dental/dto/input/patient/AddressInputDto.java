@@ -9,32 +9,32 @@ import javax.validation.constraints.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressInputDto {
 
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
 
-
+    @NotBlank(message = "A street must be specified")
     private String street;
 
-    @NotNull(message = "ss")
-    @Digits(integer = 8, fraction = 0, message = "El número debe tener como máximo 8 dígitos")
-    @NotBlank(message = "ss")
+    @Digits(integer = 8, fraction = 0, message = "The street number will only" +
+            " be valid if it has less than 8 digits")
+    @NotBlank(message = "The street number must be specified")
     private int number;
 
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
 
+    @NotBlank(message = "The locality must be specified")
+    @Size(min = 1, max = 90, message = "The locality will only be valid if it" +
+            " has less than 90 characters")
     private String locality;
 
-    @NotNull(message = "sss")
-    @NotBlank(message = "ss")
-
+    @NotBlank(message = "The city must be specified")
+    @Size(min = 1, max = 90, message = "The city will only be valid if it" +
+            " has less than 90 characters")
     private String city;
 
 
     public AddressInputDto() {
     }
 
-    public AddressInputDto(String street, int number, String locality, String city) {
+    public AddressInputDto(String street, int number, String locality,
+                           String city) {
         this.street = street;
         this.number = number;
         this.locality = locality;
