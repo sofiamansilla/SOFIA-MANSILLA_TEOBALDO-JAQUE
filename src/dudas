@@ -1,0 +1,6 @@
+1./ configure mapping en appointment service
+2./ que es strem
+3./ exception solo en metodos delete y en turno, registrar.
+4/        LOGGER.warn("The patient with id: " + id + " has been deleted");
+               LOGGER.warn("Se ha eliminado el paciente con id: {}", id);
+               5./ aprender las exceptions

@@ -8,6 +8,7 @@ import com.dentalClinic.dental.dto.update.DentistUpdateInputDto;
 import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
 import com.dentalClinic.dental.entity.Dentist;
 import com.dentalClinic.dental.entity.Patient;
+import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.DentistRepository;
 import com.dentalClinic.dental.service.IDentistService;
 import com.dentalClinic.dental.utils.JsonPrinter;
@@ -22,8 +23,8 @@ import java.util.List;
 public class DentistService implements IDentistService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(DentistService.class);
-    private DentistRepository dentistIRepository;
-    private ModelMapper modelMapper;
+    private final DentistRepository dentistIRepository;
+    private final ModelMapper modelMapper;
 
     public DentistService(DentistRepository dentistIRepository,
                           ModelMapper modelMapper) {
@@ -161,24 +162,24 @@ public class DentistService implements IDentistService {
     dentistService.deleteDentist(id);
     */
     @Override
-    public void deleteDentist(Long id) {
+    public void deleteDentist(Long id) throws ResourceNotFoundException {
         if (dentistIRepository.findById(id).orElse(null) != null) {
             dentistIRepository.deleteById(id);
             LOGGER.warn("The dentist with id: " + id + "has been deleted");
             /*LOGGER.warn("Se ha eliminado el dentista con id: {}", id);*/
         } else {
             LOGGER.error("The dentist with the id " + id + " was not found");
-//            throw new ResourceNotFoundException("The dentist with the id "
-//            + id + " was not found")
+            throw new ResourceNotFoundException("The dentist with the id "
+            + id + " was not found");
         }
 
     }
 
-    @Override
-    public DentistOutputDto searchDentistForLicenceNumber(String licenceNumber) {
-        return modelMapper.map(dentistIRepository.findByLicenceNumber(licenceNumber),
-                DentistOutputDto.class);
-    }
+//    @Override
+//    public DentistOutputDto searchDentistForLicenceNumber(String licenceNumber) {
+//        return modelMapper.map(dentistIRepository.findByLicenceNumber(licenceNumber),
+//                DentistOutputDto.class);
+//    }
 
 
 }

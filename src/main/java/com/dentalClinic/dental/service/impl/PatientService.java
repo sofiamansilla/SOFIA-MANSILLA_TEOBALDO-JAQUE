@@ -4,6 +4,7 @@ import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
 import com.dentalClinic.dental.entity.Patient;
+import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.PatientRepository;
 import com.dentalClinic.dental.service.IPatientService;
 import com.dentalClinic.dental.utils.JsonPrinter;
@@ -23,8 +24,8 @@ public class PatientService implements IPatientService {
     private final Logger LOGGER =
             (Logger) LoggerFactory.getLogger(PatientService.class);
 
-    private PatientRepository patientIRepository;
-    private ModelMapper modelMapper;
+    private final PatientRepository patientIRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public PatientService(PatientRepository patientRepository,
@@ -151,15 +152,6 @@ public class PatientService implements IPatientService {
         } else {
             LOGGER.error("The patient update failed because the patient is " +
                     "not in our database");
-        /* CHECK LATER: public class PatientNotFoundException extends
-            RuntimeException {
-            public PatientNotFoundException(Long patientId) {
-            super("Patient not found: " + patientId);
-            }}
-
-            throw new PatientNotFoundException(patientReceived.getId());
-            */
-
 
         }
         return patientOutputDto;
@@ -174,40 +166,38 @@ public class PatientService implements IPatientService {
     patientService.deletePatient(1L);
     */
     @Override
-    public void deletePatient(Long id) {
+    public void deletePatient(Long id) throws ResourceNotFoundException {
         if (patientIRepository.findById(id).orElse(null) != null) {
             patientIRepository.deleteById(id);
-            LOGGER.warn("The patient with id: " + id + "has been deleted");
-            /*LOGGER.warn("Se ha eliminado el paciente con id: {}", id);*/
+            LOGGER.warn("The patient was deleted: {}", id);
         } else {
             LOGGER.error("The patient with the id " + id + " was not found");
-//            throw new ResourceNotFoundException("The patient with the id "
-//            + id + " was not found")
+            throw new ResourceNotFoundException("The patient with the id "
+            + id + " was not found");
         }
 
-
     }
 
-    /*
-    searchPatientForDni: Searches for a patient by their DNI and returns a
-    PatientOutputDto object containing the patient's information.
-    Parameters dni: The DNI of the patient to search for.
-    Return Value: A PatientOutputDto object containing the patient's
-    information, or null if the patient is not found.
-    Usage Example: PatientOutputDto patientOutputDto = patientService
-    .searchPatientForDni(12345678);
-    if (patientOutputDto != null) {
-    // Process the retrieved patient information
-    } else {
-    // Patient not found
-    }
-    */
-    @Override
-    public PatientOutputDto searchPatientForDni(int dni) {
-        return modelMapper.map(patientIRepository.findByDni(dni),
-                PatientOutputDto.class);
-
-    }
+//    /*
+//    searchPatientForDni: Searches for a patient by their DNI and returns a
+//    PatientOutputDto object containing the patient's information.
+//    Parameters dni: The DNI of the patient to search for.
+//    Return Value: A PatientOutputDto object containing the patient's
+//    information, or null if the patient is not found.
+//    Usage Example: PatientOutputDto patientOutputDto = patientService
+//    .searchPatientForDni(12345678);
+//    if (patientOutputDto != null) {
+//    // Process the retrieved patient information
+//    } else {
+//    // Patient not found
+//    }
+//    */
+//    @Override
+//    public PatientOutputDto searchPatientForDni(int dni) {
+//        return modelMapper.map(patientIRepository.findByDni(dni),
+//                PatientOutputDto.class);
+//
+//    }
 
     private void configureMapping() {
         modelMapper.typeMap(PatientInputDto.class, Patient.class)

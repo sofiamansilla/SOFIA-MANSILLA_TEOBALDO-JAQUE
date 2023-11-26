@@ -6,6 +6,7 @@ import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.DentistUpdateInputDto;
 import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
+import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public interface IDentistService {
 
     DentistOutputDto updateDentist (DentistUpdateInputDto dentistUpdateInputDto);
 
-    void deleteDentist(Long id);
+    void deleteDentist(Long id) throws ResourceNotFoundException;
 
-    DentistOutputDto searchDentistForLicenceNumber(String licenceNumber);
+//    DentistOutputDto searchDentistForLicenceNumber(String licenceNumber);
 
 };
 
