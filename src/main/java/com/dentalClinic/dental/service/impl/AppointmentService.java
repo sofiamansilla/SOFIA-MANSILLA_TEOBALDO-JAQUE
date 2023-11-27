@@ -2,19 +2,21 @@ package com.dentalClinic.dental.service.impl;
 
 import com.dentalClinic.dental.dto.input.appointment.AppointmentInputDto;
 import com.dentalClinic.dental.dto.output.appointment.AppointmentOutputDto;
+import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
+import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.AppointmentUpdateInputDto;
 import com.dentalClinic.dental.entity.Appointment;
+import com.dentalClinic.dental.exceptions.BadRequestException;
+import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.AppointmentRepository;
-import com.dentalClinic.dental.repository.DentistRepository;
 import com.dentalClinic.dental.service.IAppointmentService;
 import com.dentalClinic.dental.utils.JsonPrinter;
 import org.modelmapper.ModelMapper;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.stereotype.Service;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -24,7 +26,10 @@ public class AppointmentService implements IAppointmentService {
             LoggerFactory.getLogger(AppointmentService.class);
     private final AppointmentRepository appointmentRepository;
     private final ModelMapper modelMapper;
+
+    @Autowired
     private final PatientService patientService;
+    @Autowired
     private final DentistService dentistService;
 
     public AppointmentService(AppointmentRepository appointmentRepository,
@@ -60,20 +65,101 @@ public class AppointmentService implements IAppointmentService {
             System.out.println("Appointment registration failed");
         }
     */
-    @Override
-    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointment) {
-        LOGGER.info("AppointmentInputDto: " + JsonPrinter.toString(appointment));
-        Appointment appointmentEntity = modelMapper.map(appointment,
-                Appointment.class);
+//    @Override
+//    public AppointmentOutputDto registerAppointment(AppointmentInputDto
+//    appointment) throws BadRequestExpection {
+//        LOGGER.info("AppointmentInputDto: " + JsonPrinter.toString
+//        (appointment));
+//        Appointment appointmentEntity = modelMapper.map(appointment,
+//                Appointment.class);
+//
+//        Appointment appointmentToPersist =
+//                appointmentRepository.save(appointmentEntity);
+//        AppointmentOutputDto appointmentOutputDto =
+//                modelMapper.map(appointmentToPersist,
+//                        AppointmentOutputDto.class);
+//        LOGGER.info("AppointmentOutputDto : " + JsonPrinter.toString
+//        (appointmentOutputDto));
+//
+//
+//        return appointmentOutputDto;
+//
+//    }
 
-        Appointment appointmentToPersist =
-                appointmentRepository.save(appointmentEntity);
-        AppointmentOutputDto appointmentOutputDto =
-                modelMapper.map(appointmentToPersist,
-                        AppointmentOutputDto.class);
-        LOGGER.info("AppointmentOutputDto : " + JsonPrinter.toString(appointmentOutputDto));
+    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointment) throws BadRequestException {
+
+        PatientOutputDto patientAppointment =
+                patientService.searchPatientForId(appointment.getPatientOutputDto().getId());
+        DentistOutputDto dentistAppointment =
+                dentistService.searchDentistForId(appointment.getDentistOutputDto().getId());
+
+        AppointmentOutputDto appointmentOutputDto = null;
+
+        if (patientAppointment.getId() != null && dentistAppointment.getId() != null) {
+            Appointment appointmentEntity = modelMapper.map(appointment,
+                    Appointment.class);
+
+            Appointment appointmentToPersist =
+                    appointmentRepository.save(appointmentEntity);
+
+            appointmentOutputDto = modelMapper.map(appointmentToPersist,
+                    AppointmentOutputDto.class);
+            LOGGER.info("Appointment created: " + JsonPrinter.toString(appointmentOutputDto) +
+                    " fot the patient: " + JsonPrinter.toString(patientAppointment) +
+                    " with the dentist: " + JsonPrinter.toString(dentistAppointment));
+
+        } else if (patientAppointment.getId() == null && patientAppointment.getId() == null) {
+            LOGGER.error("No se pudo registrar el turno. Paciente y " +
+                    "Odontólogo no encontrado.");
+            throw new BadRequestException("No se han encontrado el odontólogo" +
+                    " ni el paciente. No es posible registrar el turno");
+
+        } else if (dentistAppointment.getId() == null) {
+            LOGGER.error("No se pudo registrar el turno. Odontólogo no " +
+                    "encontrado");
+            throw new BadRequestException("No se ha encontrado el odontólogo." +
+                    " No es posible regustrar el turno.");
+        } else if (patientAppointment.getId() == null) {
+            LOGGER.error("No se pudo registrar el turno. Paciente no " +
+                    "encontrado");
+            throw new BadRequestException("No se ha encontrado al paciente. " +
+                    "No es posible registrar el turno");
+        }
+
+
         return appointmentOutputDto;
     }
+
+//    @Override
+//    public TurnoSalidaDto registrarTurno(TurnoEntradaDto turno) throws
+//    BadRequestException{
+//        //veridicar que el paciente y el odontologo existan
+//        OdontologoSalidaDto odontologoBuscado = odontologoService
+//        .buscarOdontologoPorId(turno.getOdontologoId());
+//        PacienteSalidaDto pacienteBuscado = pacienteService
+//        .buscarPacientePorId(turno.getPacienteId());
+//        if(odontologoBuscado == null){
+//            throw new BadRequestException("odontologo no existe");
+//        }
+//        if(pacienteBuscado == null){
+//            throw new BadRequestException("odontologo es nulo");
+//        }
+//        if (odontologoBuscado != null && pacienteBuscado != null) {
+//            LOGGER.info("TurnoEntradaDto: " + JsonPrinter.toString(turno));
+//            Turno TurnoEntidad =  modelMapper.map(turno,Turno.class);
+//
+//            Turno turnoAPersistir= turnoRepository.save(TurnoEntidad);
+//
+//            TurnoSalidaDto turnoSalidaDto = modelMapper.map
+//            (turnoAPersistir, TurnoSalidaDto.class);
+//            LOGGER.info("TurnoSalidaDto: " + JsonPrinter.toString
+//            (turnoSalidaDto));
+//            return turnoSalidaDto;
+//        } else {
+//            throw new BadRequestException("odontologo y paciente no existen");
+//        }
+//    }
+
 
     /*
     listAppointments: This method retrieves all appointment records from the
@@ -109,7 +195,7 @@ public class AppointmentService implements IAppointmentService {
     public AppointmentOutputDto searchAppointmentForId(Long id) {
 
         Appointment searchedAppointment =
-                appointmentRepository.findBy(id).orElse(null);
+                appointmentRepository.findById(id).orElse(null);
         AppointmentOutputDto appointmentFound = null;
 
         if (searchedAppointment != null) {
@@ -129,13 +215,14 @@ public class AppointmentService implements IAppointmentService {
         Appointment appointmentToUpdate =
                 appointmentRepository.findById(appointmentReceived.getId()).orElse(null);
         AppointmentOutputDto appointmentOutputDto = null;
-        if(appointmentToUpdate != null){
+        if (appointmentToUpdate != null) {
             appointmentToUpdate = appointmentReceived;
             appointmentRepository.save(appointmentToUpdate);
 
             appointmentOutputDto = modelMapper.map(appointmentToUpdate,
                     AppointmentOutputDto.class);
-            LOGGER.warn("Updated appointment: {}", JsonPrinter.toString(appointmentOutputDto));
+            LOGGER.warn("Updated appointment: {}",
+                    JsonPrinter.toString(appointmentOutputDto));
         }
 
 
@@ -143,9 +230,21 @@ public class AppointmentService implements IAppointmentService {
     }
 
     @Override
-    public void deleteAppointment(Long id) {
+    public void deleteAppointment(Long id) throws ResourceNotFoundException {
+
+        if (appointmentRepository.findById(id).orElse(null) != null) {
+            appointmentRepository.deleteById(id);
+            LOGGER.warn("The appointment was deleted: {}", id);
+        } else {
+            LOGGER.error("The appointment with the id " + id + " was not " +
+                    "found");
+            throw new ResourceNotFoundException("The appointment with the id "
+                    + id + " was not found");
+        }
 
     }
+
+
 }
 
 

@@ -4,3 +4,4 @@
 4/        LOGGER.warn("The patient with id: " + id + " has been deleted");
                LOGGER.warn("Se ha eliminado el paciente con id: {}", id);
                5./ aprender las exceptions
+6. throews expection psts turno, di no est el dentista, ni el paciente ni ninguno

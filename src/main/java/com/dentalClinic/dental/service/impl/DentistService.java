@@ -1,20 +1,16 @@
 package com.dentalClinic.dental.service.impl;
 
 import com.dentalClinic.dental.dto.input.dentist.DentistInputDto;
-import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
-import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.DentistUpdateInputDto;
-import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
 import com.dentalClinic.dental.entity.Dentist;
-import com.dentalClinic.dental.entity.Patient;
 import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.DentistRepository;
 import com.dentalClinic.dental.service.IDentistService;
 import com.dentalClinic.dental.utils.JsonPrinter;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

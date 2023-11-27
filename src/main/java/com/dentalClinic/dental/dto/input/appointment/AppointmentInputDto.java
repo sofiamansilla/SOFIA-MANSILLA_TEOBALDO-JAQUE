@@ -1,5 +1,7 @@
 package com.dentalClinic.dental.dto.input.appointment;
 
+import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
+import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.entity.Dentist;
 import com.dentalClinic.dental.entity.Patient;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,20 +23,20 @@ import java.time.LocalDate;
 
         @NotNull(message = "A dentist must be specified")
         @Valid
-        private Dentist dentist;
+        private DentistOutputDto dentistOutputDto;
 
         @NotNull(message = "A patient must be specified")
         @Valid
-        private Patient patient;
+        private PatientOutputDto patientOutputDto;
 
 
-        public AppointmentInputDto() {
+        public AppointmentInputDto(LocalDate dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
+            this.dateAndTime = dateAndTime;
+            this.dentistOutputDto = dentistOutputDto;
+            this.patientOutputDto = patientOutputDto;
         }
 
-        public AppointmentInputDto(LocalDate dateAndTime, Dentist dentist, Patient patient) {
-            this.dateAndTime = dateAndTime;
-            this.dentist = dentist;
-            this.patient = patient;
+        public AppointmentInputDto() {
         }
 
         public LocalDate getDateAndTime() {
@@ -45,19 +47,19 @@ import java.time.LocalDate;
             this.dateAndTime = dateAndTime;
         }
 
-        public Dentist getDentist() {
-            return dentist;
+        public DentistOutputDto getDentistOutputDto() {
+            return dentistOutputDto;
         }
 
-        public void setDentist(Dentist dentist) {
-            this.dentist = dentist;
+        public void setDentistOutputDto(DentistOutputDto dentistOutputDto) {
+            this.dentistOutputDto = dentistOutputDto;
         }
 
-        public Patient getPatient() {
-            return patient;
+        public PatientOutputDto getPatientOutputDto() {
+            return patientOutputDto;
         }
 
-        public void setPatient(Patient patient) {
-            this.patient = patient;
+        public void setPatientOutputDto(PatientOutputDto patientOutputDto) {
+            this.patientOutputDto = patientOutputDto;
         }
     }
