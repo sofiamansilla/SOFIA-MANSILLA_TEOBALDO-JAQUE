@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.OK;
 
 public class PatientController {
@@ -63,7 +65,7 @@ public class PatientController {
                     "server error",
                     content = @Content)
     })
-    @GetMapping("/id/{id}")   // se debe poner /id antes?
+    @GetMapping("/id/{id}")
     public ResponseEntity<DentistOutputDto> getPatientByID(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.searchPatientForId(id),
                 HttpStatus.OK);
