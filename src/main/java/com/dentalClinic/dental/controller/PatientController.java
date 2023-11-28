@@ -1,68 +1,146 @@
 package com.dentalClinic.dental.controller;
 
+import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
+import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
+import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
+import com.dentalClinic.dental.dto.update.PatientUpdateInputDto;
+import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.service.IPatientService;
+import com.dentalClinic.dental.service.impl.PatientService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+
+import static org.springframework.http.HttpStatus.OK;
 
 public class PatientController {
 
-    private IPatientService patientService;
-
+    private final IPatientService patientService;
 
     public PatientController(IPatientService patientService) {
         this.patientService = patientService;
     }
 
 
-    //POST
+    //POST - Register a new patient
+    @Operation(summary = "New patient registration")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "The patient was" +
+                    " registered successfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation =
+                                    PatientOutputDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server" +
+                    " error",
+                    content = @Content)
+    })
     @PostMapping("/register")
-    public ResponseEntity<PacienteSalidaDto> registrarPaciente(@RequestBody @Valid PacienteEntradaDto paciente) {
-        return new ResponseEntity<>(pacienteService.registrarPaciente(paciente), HttpStatus.CREATED);
+
+    public ResponseEntity<PatientOutputDto> registerPatient(@Valid @RequestBody PatientInputDto patient) {
+        return new ResponseEntity<>(patientService.registerPatient(patient),
+                HttpStatus.CREATED);
     }
 
 
-    //GET
-    @GetMapping("{id}")
-    public ResponseEntity<PacienteSalidaDto> obtenerPacientePorId(@PathVariable Long id) {
-        return new ResponseEntity<>(pacienteService.buscarPacientePorId(id), HttpStatus.OK);
+    //GET -- Search a patient by ID
+
+    @Operation(summary = "Search for a patient by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient found " +
+                    "succesfully",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PatientOutputDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Patient not " +
+                    "found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal " +
+                    "server error",
+                    content = @Content)
+    })
+    @GetMapping("/id/{id}")   // se debe poner /id antes?
+    public ResponseEntity<DentistOutputDto> getPatientByID(@PathVariable Long id) {
+        return new ResponseEntity<>(patientService.searchPatientForId(id),
+                HttpStatus.OK);
+
     }
 
+//GET -- List patients
+
+
+
+
+    @Operation(summary = "List of all patients")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of " +
+                    "patients successfully obtained",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PatientOutputDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal " +
+                    "server error",
+                    content = @Content)
+    })
     @GetMapping("/list")
-    public ResponseEntity<List<PacienteSalidaDto>> listarPacientes() {
-        return new ResponseEntity<>(pacienteService.listarPacientes(), HttpStatus.OK);
+    public ResponseEntity<List<PatientOutputDto>> listPatients() {
+        return new ResponseEntity<>(patientService.listPatients(), OK);
     }
 
-    //PUT
+
+    //PUT - Update Patients
+
+
+    @Operation(summary = "Patient Update")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Patient " +
+                    "successfully updated",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = PatientOutputDto.class))}),
+            @ApiResponse(responseCode = "400", description = "Bad Request",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Patient not " +
+                    "found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server" +
+                    " error",
+                    content = @Content)
+    })
     @PutMapping("/update")
-    public PacienteSalidaDto actualizarPaciente(@RequestBody PacienteModificacionEntradaDto paciente) {
-        return pacienteService.actualizarPaciente(paciente);
+    public ResponseEntity<PatientOutputDto> updatePatient(@Valid @RequestBody PatientUpdateInputDto patient) throws ResourceNotFoundException {
+        return new ResponseEntity<>(patientService.updatePatient(patient),
+                HttpStatus.OK);
     }
 
-    //DELETE
+
+    //DELETE - Delete patient
+
+    @Operation(summary = "Delete a patient by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Patient " +
+                    "successfully deleted",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = String.class))}),
+            @ApiResponse(responseCode = "400", description = "The ID is not " +
+                    "valid",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Patient " +
+                    "not found",
+                    content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal server" +
+                    " error",
+                    content = @Content)
+    })
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> eliminarPaciente(@PathVariable Long id) throws ResourceNotFoundException {
-        pacienteService.eliminarPaciente(id);
-        return new ResponseEntity<>("Paciente eliminado correctamente", HttpStatus.OK);
+    public ResponseEntity<?> deletePatient(@PathVariable Long id) throws ResourceNotFoundException{
+        patientService.deletePatient(id);
+        return new ResponseEntity<>("Patient successfully deleted",
+                HttpStatus.NO_CONTENT);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

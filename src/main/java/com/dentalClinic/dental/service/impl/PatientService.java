@@ -22,6 +22,7 @@ import java.util.List;
 public class PatientService implements IPatientService {
 
     private final Logger LOGGER =
+
             (Logger) LoggerFactory.getLogger(PatientService.class);
 
     private final PatientRepository patientIRepository;
