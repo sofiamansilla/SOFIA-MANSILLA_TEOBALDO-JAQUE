@@ -1,6 +1,5 @@
 package com.dentalClinic.dental.service.impl;
 
-import com.dentalClinic.dental.dto.input.appointment.AppointmentInputDto;
 import com.dentalClinic.dental.dto.output.appointment.AppointmentOutputDto;
 import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
@@ -18,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -86,7 +86,7 @@ public class AppointmentService implements IAppointmentService {
 //
 //    }
 
-    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointment) throws BadRequestException {
+    public AppointmentOutputDto registerAppointment(@Valid AppointmentOutputDto appointment) throws BadRequestException {
 
         PatientOutputDto patientAppointment =
                 patientService.searchPatientForId(appointment.getPatientOutputDto().getId());

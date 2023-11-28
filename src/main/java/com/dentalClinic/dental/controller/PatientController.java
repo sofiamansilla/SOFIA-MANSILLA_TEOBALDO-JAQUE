@@ -10,6 +10,11 @@ import com.dentalClinic.dental.service.impl.PatientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import javax.validation.Valid;
 
@@ -55,7 +60,8 @@ public class PatientController {
             @ApiResponse(responseCode = "200", description = "Patient found " +
                     "succesfully",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PatientOutputDto.class))}),
+                            schema = @Schema(implementation =
+                                    PatientOutputDto.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Patient not " +
@@ -66,7 +72,7 @@ public class PatientController {
                     content = @Content)
     })
     @GetMapping("/id/{id}")
-    public ResponseEntity<DentistOutputDto> getPatientByID(@PathVariable Long id) {
+    public ResponseEntity<PatientOutputDto> getPatientByID(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.searchPatientForId(id),
                 HttpStatus.OK);
 
@@ -75,14 +81,13 @@ public class PatientController {
 //GET -- List patients
 
 
-
-
     @Operation(summary = "List of all patients")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "List of " +
                     "patients successfully obtained",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PatientOutputDto.class))}),
+                            schema = @Schema(implementation =
+                                    PatientOutputDto.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal " +
@@ -103,7 +108,8 @@ public class PatientController {
             @ApiResponse(responseCode = "200", description = "Patient " +
                     "successfully updated",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = PatientOutputDto.class))}),
+                            schema = @Schema(implementation =
+                                    PatientOutputDto.class))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Patient not " +
@@ -139,7 +145,7 @@ public class PatientController {
                     content = @Content)
     })
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<?> deletePatient(@PathVariable Long id) throws ResourceNotFoundException{
+    public ResponseEntity<?> deletePatient(@PathVariable Long id) throws ResourceNotFoundException {
         patientService.deletePatient(id);
         return new ResponseEntity<>("Patient successfully deleted",
                 HttpStatus.NO_CONTENT);
