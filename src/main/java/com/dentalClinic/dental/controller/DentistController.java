@@ -46,7 +46,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @PostMapping("/register")
+    @PostMapping("/")
 
     public ResponseEntity<DentistOutputDto> registerDentist(@Valid @RequestBody DentistInputDto dentist) {
         return new ResponseEntity<>(dentistService.registerDentist(dentist),
