@@ -28,6 +28,7 @@ public class DentistService implements IDentistService {
         this.modelMapper = modelMapper;
     }
 
+    //POST - Register a new dentist
     /*
         registerDentist: This method registers a new dentist in the system;
         Parameters: The dentist information to register;
@@ -51,6 +52,9 @@ public class DentistService implements IDentistService {
 
     }
 
+    ;
+
+    //GET -- List dentists
     /*
     listDentists: This method retrieves a list of all dentists and returns
     it as a List<DentistOutputDto>;
@@ -73,6 +77,9 @@ public class DentistService implements IDentistService {
         return dentistsOutputDto;
     }
 
+    ;
+
+    //GET -- Search a dentist by id
     /*
     searchDentistForId: This method retrieve a dentist's information from
     the database using their ID.
@@ -100,6 +107,9 @@ public class DentistService implements IDentistService {
         return dentistFound;
     }
 
+    ;
+
+    //PUT -- Update Dentist
     /*
     updateDentist: This method updates an existing dentist record in the
     database;
@@ -148,6 +158,9 @@ public class DentistService implements IDentistService {
         return dentistOutputDto;
     }
 
+    ;
+
+    //DELETE - Delete dentist by id
     /*
     deleteDentist: This method deletes an existing dentist record from the
     database;
@@ -161,21 +174,13 @@ public class DentistService implements IDentistService {
     public void deleteDentist(Long id) throws ResourceNotFoundException {
         if (dentistIRepository.findById(id).orElse(null) != null) {
             dentistIRepository.deleteById(id);
-            LOGGER.warn("The dentist with id: " + id + "has been deleted");
-            /*LOGGER.warn("Se ha eliminado el dentista con id: {}", id);*/
-        } else {
-            LOGGER.error("The dentist with the id " + id + " was not found");
-            throw new ResourceNotFoundException("The dentist with the id "
-            + id + " was not found");
+            LOGGER.warn("The dentist with id: {} has been deleted", id);
+            LOGGER.error("The dentist with id: {} was not found", id);
+            throw new ResourceNotFoundException("The dentist with the id"
+                    + id + " was not found");
         }
 
     }
-
-//    @Override
-//    public DentistOutputDto searchDentistForLicenceNumber(String licenceNumber) {
-//        return modelMapper.map(dentistIRepository.findByLicenceNumber(licenceNumber),
-//                DentistOutputDto.class);
-//    }
 
 
 }

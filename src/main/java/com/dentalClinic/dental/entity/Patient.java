@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) /*PROBAR SACAR EL STRATEGY*/
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(length = 50)
@@ -20,7 +20,7 @@ public class Patient {
     @Column(length = 50)
     private String dni;
 
-    private LocalDateTime dateOfEntry;
+    private LocalDate dateOfEntry;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address")
@@ -32,7 +32,7 @@ public class Patient {
     }
 
     public Patient(String name, String lastName, String dni,
-                   LocalDateTime dateOfEntry, Address address) {
+                   LocalDate dateOfEntry, Address address) {
         this.name = name;
         this.lastName = lastName;
         this.dni = dni;
@@ -41,7 +41,7 @@ public class Patient {
     }
 
     public Patient(Long id, String name, String lastName, String dni,
-                   LocalDateTime dateOfEntry, Address address) {
+                   LocalDate dateOfEntry, Address address) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -84,11 +84,11 @@ public class Patient {
         this.dni = dni;
     }
 
-    public LocalDateTime getDateOfEntry() {
+    public LocalDate getDateOfEntry() {
         return dateOfEntry;
     }
 
-    public void setDateOfEntry(LocalDateTime dateOfEntry) {
+    public void setDateOfEntry(LocalDate dateOfEntry) {
         this.dateOfEntry = dateOfEntry;
     }
 

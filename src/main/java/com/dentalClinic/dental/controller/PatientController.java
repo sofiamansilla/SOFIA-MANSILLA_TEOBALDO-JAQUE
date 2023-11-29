@@ -131,7 +131,7 @@ public class PatientController {
     }
 
 
-    //DELETE - Delete patient
+    //DELETE - Delete patient by id
 
     @Operation(summary = "Delete a patient by ID")
     @ApiResponses(value = {

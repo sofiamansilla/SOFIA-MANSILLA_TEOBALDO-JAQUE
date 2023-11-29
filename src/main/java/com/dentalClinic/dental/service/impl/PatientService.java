@@ -36,6 +36,7 @@ public class PatientService implements IPatientService {
         configureMapping();
     }
 
+    //POST - Register a new patient
     /*
     registerPatient: This method registers a new patient in the system;
     Parameters: The patient information to register;
@@ -58,7 +59,9 @@ public class PatientService implements IPatientService {
         return patientOutputDto;
     }
 
+    ;
 
+    //GET -- List patients
     /*
     listPatients: This method retrieves a list of all patients and returns
     it as a List<PatientOutputDto>;
@@ -81,6 +84,9 @@ public class PatientService implements IPatientService {
         return patientsOutputDto;
     }
 
+    ;
+
+    //GET -- Search a patient by id
     /*
     searchPatientForId: This method retrieve a patient's information from
     the database using their ID.
@@ -109,6 +115,9 @@ public class PatientService implements IPatientService {
         return patientFound;
     }
 
+    ;
+
+    //PUT -- Update Patient
     /*
     updatePatient: This method update the patient information in the database
     based on the provided PatientUpdateInputDto object. Check if the patient
@@ -158,6 +167,9 @@ public class PatientService implements IPatientService {
         return patientOutputDto;
     }
 
+    ;
+
+    //DELETE - Delete a patient by id
     /*
     deletePatient: This method deletes a patient from the database by its ID;
     Parameters id: The ID of the patient to delete;
@@ -174,31 +186,12 @@ public class PatientService implements IPatientService {
         } else {
             LOGGER.error("The patient with the id " + id + " was not found");
             throw new ResourceNotFoundException("The patient with the id "
-            + id + " was not found");
+                    + id + " was not found");
         }
 
     }
 
-//    /*
-//    searchPatientForDni: Searches for a patient by their DNI and returns a
-//    PatientOutputDto object containing the patient's information.
-//    Parameters dni: The DNI of the patient to search for.
-//    Return Value: A PatientOutputDto object containing the patient's
-//    information, or null if the patient is not found.
-//    Usage Example: PatientOutputDto patientOutputDto = patientService
-//    .searchPatientForDni(12345678);
-//    if (patientOutputDto != null) {
-//    // Process the retrieved patient information
-//    } else {
-//    // Patient not found
-//    }
-//    */
-//    @Override
-//    public PatientOutputDto searchPatientForDni(int dni) {
-//        return modelMapper.map(patientIRepository.findByDni(dni),
-//                PatientOutputDto.class);
-//
-//    }
+    ;
 
     private void configureMapping() {
         modelMapper.typeMap(PatientInputDto.class, Patient.class)
@@ -213,6 +206,4 @@ public class PatientService implements IPatientService {
 
     }
 
-}
-//
-//
+};

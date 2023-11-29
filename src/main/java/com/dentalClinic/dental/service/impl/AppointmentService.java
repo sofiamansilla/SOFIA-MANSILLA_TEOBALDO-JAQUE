@@ -42,30 +42,28 @@ public class AppointmentService implements IAppointmentService {
         this.dentistService = dentistService;
     }
 
+
+    //POST - Register a new appointment
     /*
-        registerAppointment: This method creates a new appointment record in the
-        database.
-        Parameters: appointment: An instance of AppointmentInputDto containing
-        the appointment information.
-        Return Value: An instance of AppointmentOutputDto containing the created
-        appointment information.
-        Usage example:
-        AppointmentInputDto appointmentInputDto = new AppointmentInputDto();
-        appointmentInputDto.setDentistId(12345L);
-        appointmentInputDto.setDate("2023-11-24");
-        appointmentInputDto.setTime("10:00");
-        appointmentInputDto.setPatientName("John Doe");
+This method registers a new appointment. It validates the patient and dentist
+ IDs, creates and saves the appointment entity, and then converts and returns
+  the appointment output DTO.
+Parameters: appointment: An AppointmentOutputDto object containing the
+appointment details.
+Return Value: An AppointmentOutputDto object containing the details of the
+created appointment, or null if the appointment could not be registered.
+Example Code:
 
-        AppointmentOutputDto appointmentOutputDto = dentistService
-        .registerAppointment(appointmentInputDto);
+AppointmentOutputDto appointmentOutputDto = registerAppointment(new
+    AppointmentOutputDto(1L, 2L, "2023-11-29", "10:00"));
+if (appointmentOutputDto != null) {
+    System.out.println("Appointment created: " + JsonPrinter.toString
+    (appointmentOutputDto));
+} else {
+    System.out.println("Appointment could not be registered");
+}
 
-        if (appointmentOutputDto != null) {
-            System.out.println("Appointment registered successfully");
-        } else {
-            System.out.println("Appointment registration failed");
-        }
     */
-
 
     public AppointmentOutputDto registerAppointment(@Valid AppointmentOutputDto appointment) throws BadRequestException {
 
@@ -74,44 +72,33 @@ public class AppointmentService implements IAppointmentService {
         DentistOutputDto dentistAppointment =
                 dentistService.searchDentistForId(appointment.getDentistOutputDto().getId());
 
-        AppointmentOutputDto appointmentOutputDto = null;
-
-        if (patientAppointment.getId() != null && dentistAppointment.getId() != null) {
-            Appointment appointmentEntity = modelMapper.map(appointment,
-                    Appointment.class);
-
-            Appointment appointmentToPersist =
-                    appointmentRepository.save(appointmentEntity);
-
-            appointmentOutputDto = modelMapper.map(appointmentToPersist,
-                    AppointmentOutputDto.class);
-            LOGGER.info("Appointment created: " + JsonPrinter.toString(appointmentOutputDto) +
-                    " for the patient: " + JsonPrinter.toString(patientAppointment) +
-                    " with the dentist: " + JsonPrinter.toString(dentistAppointment));
-
-        } else if (patientAppointment.getId() == null && patientAppointment.getId() == null) {
-            LOGGER.error("The appointment could not be registered. Patient " +
-                    "and dentist not found");
-            throw new BadRequestException("Dentist and patient was not " +
-                    "found. It can not be possible register the appointment");
-
-        } else if (dentistAppointment.getId() == null) {
-            LOGGER.error("The appointment could not ");
-            throw new BadRequestException("No se ha encontrado el odontólogo." +
-                    " No es posible regustrar el turno.");
-        } else if (patientAppointment.getId() == null) {
-            LOGGER.error("No se pudo registrar el turno. Paciente no " +
-                    "encontrado");
-            throw new BadRequestException("No se ha encontrado al paciente. " +
-                    "No es posible registrar el turno");
+        if (!isValidPatientAndDentist(patientAppointment, dentistAppointment)) {
+            throw new BadRequestException("Patient or dentist not found");
         }
 
+        Appointment appointmentEntity = modelMapper.map(appointment,
+                Appointment.class);
+        Appointment appointmentToPersist =
+                appointmentRepository.save(appointmentEntity);
 
+        AppointmentOutputDto appointmentOutputDto =
+                modelMapper.map(appointmentToPersist,
+                        AppointmentOutputDto.class);
+        LOGGER.info("Appointment created: " + JsonPrinter.toString(appointmentOutputDto));
         return appointmentOutputDto;
     }
 
+    ;
+
+    private boolean isValidPatientAndDentist(PatientOutputDto patient,
+                                             DentistOutputDto dentist) {
+        return patient != null && patient.getId() != null && dentist != null && dentist.getId() != null;
+    }
+
+    ;
 
 
+    //GET - List dentists
     /*
     listAppointments: This method retrieves all appointment records from the
     database;
@@ -126,6 +113,7 @@ public class AppointmentService implements IAppointmentService {
     System.out.println(appointmentOutputDto);
     }
 */
+
     @Override
     public List<AppointmentOutputDto> listAppointments() {
 
@@ -142,6 +130,26 @@ public class AppointmentService implements IAppointmentService {
         return appointmentsOutputDto;
     }
 
+    ;
+
+
+    //GET -- Search an appointment by ID
+    /* This method searches for an appointment by its ID. It retrieves the
+    appointment entity from the repository, converts it to an
+    AppointmentOutputDto object, and returns the result.
+    Parameters: id: The ID of the appointment to search for.
+    Return Value: An AppointmentOutputDto object containing the details of
+    the appointment, or null if the appointment was not found.
+    Example Code:
+
+    AppointmentOutputDto appointmentOutputDto = searchAppointmentForId(1L);
+    if (appointmentOutputDto != null) {
+        System.out.println("Appointment found: " + JsonPrinter.toString
+    (appointmentOutputDto));
+    } else {
+        System.out.println("Appointment not found");
+    }
+*/
     @Override
     public AppointmentOutputDto searchAppointmentForId(Long id) {
 
@@ -158,6 +166,34 @@ public class AppointmentService implements IAppointmentService {
         return appointmentFound;
     }
 
+
+    // PUT - Update an Appointment
+    /* This method updates an existing appointment. It retrieves the
+    appointment entity from the repository, updates its details based on the
+    provided input, saves the updated entity, and converts and returns the
+    updated appointment output DTO.
+    Parameters: appointment: An AppointmentUpdateInputDto object containing
+    the updated
+    appointment details.
+    Return Value: An AppointmentOutputDto object containing the details of
+    the updated appointment, or null if the appointment was not found.
+    Example Code:
+
+    AppointmentUpdateInputDto appointmentUpdateInputDto = new
+    AppointmentUpdateInputDto(1L, "2023-11-30", "11:00");
+    try {
+        AppointmentOutputDto updatedAppointment = updateAppointment
+        (appointmentUpdateInputDto);
+    if (updatedAppointment != null) {
+            System.out.println("Appointment updated: " + JsonPrinter.toString
+            (updatedAppointment));
+    } else {
+        System.out.println("Appointment not found");
+    }
+    } catch (ConfigDataResourceNotFoundException e) {
+        System.out.println("Error updating appointment: " + e.getMessage());
+}
+*/
     @Override
     public AppointmentOutputDto updateAppointment(AppointmentUpdateInputDto appointment) throws ConfigDataResourceNotFoundException {
 
@@ -180,6 +216,24 @@ public class AppointmentService implements IAppointmentService {
         return null;
     }
 
+    //DELETE - Delete an appointment by ID
+    /*
+    deleteAppointment: This method deletes an appointment by its ID. It checks
+     if the appointment exists, and if so, it deletes the appointment and
+     logs a message indicating successful deletion. If the appointment is not
+      found,
+    it throws a ResourceNotFoundException.
+    Parameters: id: The ID of the appointment to delete.
+    Return Value: Void.
+    Example Code:
+
+    try {
+        deleteAppointment(1L);
+           System.out.println("Appointment deleted");
+    } catch (ResourceNotFoundException e) {
+           System.out.println("Error deleting appointment: " + e.getMessage());
+}
+*/
     @Override
     public void deleteAppointment(Long id) throws ResourceNotFoundException {
 
