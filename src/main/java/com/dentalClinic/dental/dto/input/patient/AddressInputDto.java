@@ -11,22 +11,23 @@ public class AddressInputDto {
 
 
     @NotBlank(message = "A street must be specified")
+    @NotNull(message = "A street must be specified")
     private String street;
 
-    @Digits(integer = 8, fraction = 0, message = "The street number will only" +
-            " be valid if it has less than 8 digits")
-    @NotNull(message = "The street number must be specified")
+
+    @Digits(integer = 8, fraction = 0, message = "The street number must not exceed 8 digits")
+    @NotNull(message = "The street number must be provided")
     private int number;
 
 
-    @NotBlank(message = "The locality must be specified")
-    @Size(min = 1, max = 90, message = "The locality will only be valid if it" +
-            " has less than 90 characters")
+    @NotBlank(message = "The locality must not be empty or consist only of whitespaces")
+    @Size(min = 1, max = 90, message = "The locality must have between 1 and 90 characters")
     private String locality;
 
-    @NotBlank(message = "The city must be specified")
-    @Size(min = 1, max = 90, message = "The city will only be valid if it" +
-            " has less than 90 characters")
+    @NotBlank(message = "The city must not be empty or consist only of " +
+            "whitespaces")
+    @Size(min = 1, max = 90, message = "The city must have between 1 and 90 " +
+            "characters")
     private String city;
 
 

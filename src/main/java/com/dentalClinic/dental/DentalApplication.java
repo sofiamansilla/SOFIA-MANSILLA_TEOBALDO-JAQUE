@@ -15,7 +15,9 @@ public class DentalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DentalApplication.class, args);
-        LOGGER.info("The app is running");
+        LOGGER.info("\u001B[1mWelcome to our dental clinic APP!! We hope you enjoy it " +
+                "and we will be thankful for your advices, Sofia " +
+                "and Teobaldo ;)\u001B[0m");
 
     }
 

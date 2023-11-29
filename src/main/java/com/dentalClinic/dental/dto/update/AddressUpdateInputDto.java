@@ -11,15 +11,16 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AddressUpdateInputDto {
 
-    @NotBlank(message = "The ID of the address must be specified")
+    @NotBlank(message = "The unique identifier of the address")
     private Long id;
-// Tienen que ir validaciones en el modificador?
+
     @NotBlank(message = "A street must be specified")
     private String street;
 
     @Digits(integer = 8, fraction = 0, message = "The street number will only" +
             " be valid if it has less than 8 digits")
     @NotBlank(message = "The street number must be specified")
+    @NotNull(message = "The street number must be specified")
     private int number;
 
     @NotBlank(message = "The locality must be specified")

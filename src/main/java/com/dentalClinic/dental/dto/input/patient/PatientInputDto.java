@@ -35,7 +35,7 @@ public class PatientInputDto {
 
     @FutureOrPresent(message = "The date must be on or after today")
     @NotNull(message = "The date of entry must be specified")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDate dateOfEntry;
 
     @NotNull

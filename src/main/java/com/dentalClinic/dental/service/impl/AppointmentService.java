@@ -130,8 +130,6 @@ if (appointmentOutputDto != null) {
         return appointmentsOutputDto;
     }
 
-    ;
-
 
     //GET -- Search an appointment by ID
     /* This method searches for an appointment by its ID. It retrieves the
@@ -215,6 +213,7 @@ if (appointmentOutputDto != null) {
 
         return null;
     }
+
 
     //DELETE - Delete an appointment by ID
     /*

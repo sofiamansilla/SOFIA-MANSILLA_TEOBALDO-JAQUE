@@ -9,21 +9,22 @@ import javax.validation.constraints.*;
 public class DentistInputDto {
 
 
-    @NotBlank(message = "The dentist's license number must be specified")
+    @NotNull(message = "The dentist's license number must be specified")
     @Size(min = 8, max = 20, message = "The licence number is incorrect, " +
             "this one must have at least 8 characters")
     private String licenceNumber;
 
 
+    @NotNull(message = "The dentist's name must be specified")
     @Size(min = 2, max = 50, message = "Please make sure your name is at " +
             "least 2 characters and no more than 50" +
             "characters long")
-    @NotBlank(message = "The dentist's name must be specified")
     private String name;
 
+
+    @NotNull(message = "The dentist's last name must be specified")
     @Size(max = 50, message = "Please make sure your lastname is at least 2 " +
             "characters and no more than 50")
-    @NotBlank(message = "The dentist's last name must be specified")
     private String lastName;
 
 

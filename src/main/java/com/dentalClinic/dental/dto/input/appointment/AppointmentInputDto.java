@@ -10,27 +10,31 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
-
-    @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties(ignoreUnknown = true)
     public class AppointmentInputDto {
 
         @FutureOrPresent(message = "The date must be on or after today.")
-        @NotBlank(message = "The address must be specified")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        private LocalDate dateAndTime;
+        @NotNull(message = "The date and time of the appointment are needed, " +
+                "please use the format: dd-MM-yyyy HH:mm:ss")
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+        private LocalDateTime dateAndTime;
 
         @NotNull(message = "A dentist must be specified")
+        @NotBlank(message = "A dentist must be specified")
         @Valid
         private DentistOutputDto dentistOutputDto;
 
         @NotNull(message = "A patient must be specified")
+        @NotBlank(message = "A patient must be specified")
         @Valid
         private PatientOutputDto patientOutputDto;
 
 
-        public AppointmentInputDto(LocalDate dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
+        public AppointmentInputDto(LocalDateTime dateAndTime,
+                                   DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
             this.dateAndTime = dateAndTime;
             this.dentistOutputDto = dentistOutputDto;
             this.patientOutputDto = patientOutputDto;
@@ -39,11 +43,11 @@ import java.time.LocalDate;
         public AppointmentInputDto() {
         }
 
-        public LocalDate getDateAndTime() {
+        public LocalDateTime getDateAndTime() {
             return dateAndTime;
         }
 
-        public void setDateAndTime(LocalDate dateAndTime) {
+        public void setDateAndTime(LocalDateTime dateAndTime) {
             this.dateAndTime = dateAndTime;
         }
 

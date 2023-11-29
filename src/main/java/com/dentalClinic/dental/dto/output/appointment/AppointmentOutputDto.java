@@ -15,7 +15,6 @@ public class AppointmentOutputDto {
     private DentistInputDto dentistInputDto;
     private PatientInputDto patientInputDto;
 
-    /*Deberia ser el uodate?*/
 
     public AppointmentOutputDto() {
     }
