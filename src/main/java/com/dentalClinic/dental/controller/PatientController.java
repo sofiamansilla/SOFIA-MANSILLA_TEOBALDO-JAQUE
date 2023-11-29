@@ -50,7 +50,7 @@ public class PatientController {
                     " error",
                     content = @Content)
     })
-    @PostMapping("/register")
+    @PostMapping("/")
 
     public ResponseEntity<PatientOutputDto> registerPatient(@Valid @RequestBody PatientInputDto patient) {
         return new ResponseEntity<>(patientService.registerPatient(patient),
@@ -76,7 +76,7 @@ public class PatientController {
                     "server error",
                     content = @Content)
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<PatientOutputDto> getPatientByID(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.searchPatientForId(id),
                 HttpStatus.OK);
@@ -99,7 +99,7 @@ public class PatientController {
                     "server error",
                     content = @Content)
     })
-    @GetMapping("/list")
+    @GetMapping("/")
     public ResponseEntity<List<PatientOutputDto>> listPatients() {
         return new ResponseEntity<>(patientService.listPatients(), OK);
     }
@@ -124,7 +124,7 @@ public class PatientController {
                     " error",
                     content = @Content)
     })
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<PatientOutputDto> updatePatient(@Valid @RequestBody PatientUpdateInputDto patient) throws ResourceNotFoundException {
         return new ResponseEntity<>(patientService.updatePatient(patient),
                 HttpStatus.OK);
@@ -149,7 +149,7 @@ public class PatientController {
                     " error",
                     content = @Content)
     })
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePatient(@PathVariable Long id) throws ResourceNotFoundException {
         patientService.deletePatient(id);
         return new ResponseEntity<>("Patient successfully deleted",

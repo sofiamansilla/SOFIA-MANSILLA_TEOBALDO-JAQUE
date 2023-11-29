@@ -21,6 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/appointments")
+@CrossOrigin(origins = "*")
 public class AppointmentController {
 
     private final IAppointmentService appointmentService;
@@ -45,7 +46,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @PostMapping("/register")
+    @PostMapping("/")
     public ResponseEntity<AppointmentOutputDto> registerAppointment(@Valid @RequestBody AppointmentOutputDto appointment) throws BadRequestException {
         return new ResponseEntity<>(appointmentService.registerAppointment(appointment),
                 HttpStatus.CREATED);
@@ -68,7 +69,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AppointmentOutputDto> getAppointmentById(@PathVariable Long id) {
         return new ResponseEntity<>(appointmentService.searchAppointmentForId(id),
                 HttpStatus.OK);
@@ -90,7 +91,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @GetMapping("/list")
+    @GetMapping("/")
     public ResponseEntity<List<AppointmentOutputDto>> listAppointments() {
         return new ResponseEntity<>(appointmentService.listAppointments()
                 , OK);
@@ -113,7 +114,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<AppointmentOutputDto> updateAppointment(@RequestBody AppointmentUpdateInputDto appointment) throws ResourceNotFoundException {
         return new ResponseEntity<>(appointmentService.updateAppointment(appointment),
                 HttpStatus.OK);
@@ -137,7 +138,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) throws ResourceNotFoundException {
         appointmentService.deleteAppointment(id);
         return new ResponseEntity<>("Appointment successfully deleted",

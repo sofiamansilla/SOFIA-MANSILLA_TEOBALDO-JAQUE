@@ -72,7 +72,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<DentistOutputDto> getDentistById(@PathVariable Long id) {
         return new ResponseEntity<>(dentistService.searchDentistForId(id),
                 HttpStatus.OK);
@@ -94,7 +94,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @GetMapping("/list")
+    @GetMapping("/")
     public ResponseEntity<List<DentistOutputDto>> listDentists() {
         return new ResponseEntity<>(dentistService.listDentists(),
                 HttpStatus.OK);
@@ -117,7 +117,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<DentistOutputDto> updateDentist(@Valid @RequestBody DentistUpdateInputDto dentist) throws ResourceNotFoundException {
         return new ResponseEntity<>(dentistService.updateDentist(dentist),
                 HttpStatus.OK);
@@ -141,7 +141,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDentist(@PathVariable Long id) throws ResourceNotFoundException {
         dentistService.deleteDentist(id);
         return new ResponseEntity<>("Dentist \" +\n" +
