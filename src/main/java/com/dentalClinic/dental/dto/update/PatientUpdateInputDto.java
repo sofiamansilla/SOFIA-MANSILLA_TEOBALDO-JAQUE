@@ -34,7 +34,7 @@ public class PatientUpdateInputDto {
             "specified")
     @Size(min = 8, max = 13, message = "The DNI is invalid. It must be " +
             "between 8 and 13 digits long")
-    private Integer dni;
+    private String dni;
 
     @FutureOrPresent(message = "The date must be on or after today")
     @NotNull(message = "The date of entry must be specified")
@@ -49,7 +49,7 @@ public class PatientUpdateInputDto {
     }
 
     public PatientUpdateInputDto(Long id, String name, String lastName,
-                                 Integer dni, LocalDate dateOfEntry,
+                                 String dni, LocalDate dateOfEntry,
                                  AddressUpdateInputDto addressUpdateInputDto) {
         this.id = id;
         this.name = name;
@@ -83,11 +83,11 @@ public class PatientUpdateInputDto {
         this.lastName = lastName;
     }
 
-    public Integer getDni() {
+    public String getDni() {
         return dni;
     }
 
-    public void setDni(Integer dni) {
+    public void setDni(String dni) {
         this.dni = dni;
     }
 
