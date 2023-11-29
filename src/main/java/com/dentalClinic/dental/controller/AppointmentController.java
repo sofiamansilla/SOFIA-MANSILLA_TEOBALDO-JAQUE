@@ -68,7 +68,7 @@ public class AppointmentController {
                     "Internal server error",
                     content = @Content)
     })
-    @GetMapping("/id/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<AppointmentOutputDto> getAppointmentById(@PathVariable Long id) {
         return new ResponseEntity<>(appointmentService.searchAppointmentForId(id),
                 HttpStatus.OK);

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,9 +28,8 @@ public class AppointmentService implements IAppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final ModelMapper modelMapper;
 
-    @Autowired
     private final PatientService patientService;
-    @Autowired
+
     private final DentistService dentistService;
 
     public AppointmentService(AppointmentRepository appointmentRepository,
@@ -65,26 +65,7 @@ public class AppointmentService implements IAppointmentService {
             System.out.println("Appointment registration failed");
         }
     */
-//    @Override
-//    public AppointmentOutputDto registerAppointment(AppointmentInputDto
-//    appointment) throws BadRequestExpection {
-//        LOGGER.info("AppointmentInputDto: " + JsonPrinter.toString
-//        (appointment));
-//        Appointment appointmentEntity = modelMapper.map(appointment,
-//                Appointment.class);
-//
-//        Appointment appointmentToPersist =
-//                appointmentRepository.save(appointmentEntity);
-//        AppointmentOutputDto appointmentOutputDto =
-//                modelMapper.map(appointmentToPersist,
-//                        AppointmentOutputDto.class);
-//        LOGGER.info("AppointmentOutputDto : " + JsonPrinter.toString
-//        (appointmentOutputDto));
-//
-//
-//        return appointmentOutputDto;
-//
-//    }
+
 
     public AppointmentOutputDto registerAppointment(@Valid AppointmentOutputDto appointment) throws BadRequestException {
 
@@ -105,18 +86,17 @@ public class AppointmentService implements IAppointmentService {
             appointmentOutputDto = modelMapper.map(appointmentToPersist,
                     AppointmentOutputDto.class);
             LOGGER.info("Appointment created: " + JsonPrinter.toString(appointmentOutputDto) +
-                    " fot the patient: " + JsonPrinter.toString(patientAppointment) +
+                    " for the patient: " + JsonPrinter.toString(patientAppointment) +
                     " with the dentist: " + JsonPrinter.toString(dentistAppointment));
 
         } else if (patientAppointment.getId() == null && patientAppointment.getId() == null) {
-            LOGGER.error("No se pudo registrar el turno. Paciente y " +
-                    "Odontólogo no encontrado.");
-            throw new BadRequestException("No se han encontrado el odontólogo" +
-                    " ni el paciente. No es posible registrar el turno");
+            LOGGER.error("The appointment could not be registered. Patient " +
+                    "and dentist not found");
+            throw new BadRequestException("Dentist and patient was not " +
+                    "found. It can not be possible register the appointment");
 
         } else if (dentistAppointment.getId() == null) {
-            LOGGER.error("No se pudo registrar el turno. Odontólogo no " +
-                    "encontrado");
+            LOGGER.error("The appointment could not ");
             throw new BadRequestException("No se ha encontrado el odontólogo." +
                     " No es posible regustrar el turno.");
         } else if (patientAppointment.getId() == null) {
@@ -130,35 +110,6 @@ public class AppointmentService implements IAppointmentService {
         return appointmentOutputDto;
     }
 
-//    @Override
-//    public TurnoSalidaDto registrarTurno(TurnoEntradaDto turno) throws
-//    BadRequestException{
-//        //veridicar que el paciente y el odontologo existan
-//        OdontologoSalidaDto odontologoBuscado = odontologoService
-//        .buscarOdontologoPorId(turno.getOdontologoId());
-//        PacienteSalidaDto pacienteBuscado = pacienteService
-//        .buscarPacientePorId(turno.getPacienteId());
-//        if(odontologoBuscado == null){
-//            throw new BadRequestException("odontologo no existe");
-//        }
-//        if(pacienteBuscado == null){
-//            throw new BadRequestException("odontologo es nulo");
-//        }
-//        if (odontologoBuscado != null && pacienteBuscado != null) {
-//            LOGGER.info("TurnoEntradaDto: " + JsonPrinter.toString(turno));
-//            Turno TurnoEntidad =  modelMapper.map(turno,Turno.class);
-//
-//            Turno turnoAPersistir= turnoRepository.save(TurnoEntidad);
-//
-//            TurnoSalidaDto turnoSalidaDto = modelMapper.map
-//            (turnoAPersistir, TurnoSalidaDto.class);
-//            LOGGER.info("TurnoSalidaDto: " + JsonPrinter.toString
-//            (turnoSalidaDto));
-//            return turnoSalidaDto;
-//        } else {
-//            throw new BadRequestException("odontologo y paciente no existen");
-//        }
-//    }
 
 
     /*

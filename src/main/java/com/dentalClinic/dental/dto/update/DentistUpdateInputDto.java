@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DentistUpdateInputDto {
 
-    @NotBlank(message = "The ID of the dentist must be specified")
+    @NotNull(message = "The ID of the dentist must be specified")
     private Long id;
 
     @NotBlank(message = "The dentist's license number must be specified")

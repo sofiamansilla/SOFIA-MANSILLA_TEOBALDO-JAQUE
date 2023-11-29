@@ -22,9 +22,14 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.OK;
 
+
+@RestController
+@RequestMapping("/patients")
+@CrossOrigin(origins = "*")
 public class PatientController {
 
     private final IPatientService patientService;
+
 
     public PatientController(IPatientService patientService) {
         this.patientService = patientService;
@@ -71,7 +76,7 @@ public class PatientController {
                     "server error",
                     content = @Content)
     })
-    @GetMapping("/id/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<PatientOutputDto> getPatientByID(@PathVariable Long id) {
         return new ResponseEntity<>(patientService.searchPatientForId(id),
                 HttpStatus.OK);

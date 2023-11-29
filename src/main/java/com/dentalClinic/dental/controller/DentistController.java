@@ -9,6 +9,11 @@ import com.dentalClinic.dental.service.impl.DentistService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -67,7 +72,7 @@ public class DentistController {
                     " error",
                     content = @Content)
     })
-    @GetMapping("/id/{id}")
+    @GetMapping("/search/{id}")
     public ResponseEntity<DentistOutputDto> getDentistById(@PathVariable Long id) {
         return new ResponseEntity<>(dentistService.searchDentistForId(id),
                 HttpStatus.OK);
@@ -117,9 +122,6 @@ public class DentistController {
         return new ResponseEntity<>(dentistService.updateDentist(dentist),
                 HttpStatus.OK);
     }
-
-
-
 
 
     //DELETE - Delete Dentist

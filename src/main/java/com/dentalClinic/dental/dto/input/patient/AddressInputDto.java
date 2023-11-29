@@ -15,7 +15,7 @@ public class AddressInputDto {
 
     @Digits(integer = 8, fraction = 0, message = "The street number will only" +
             " be valid if it has less than 8 digits")
-    @NotBlank(message = "The street number must be specified")
+    @NotNull(message = "The street number must be specified")
     private int number;
 
 

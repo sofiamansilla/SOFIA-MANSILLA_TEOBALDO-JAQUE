@@ -3,6 +3,7 @@ package com.dentalClinic.dental.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PATIENTS")
@@ -19,7 +20,7 @@ public class Patient {
     @Column(length = 50)
     private String dni;
 
-    private LocalDate dateOfEntry;
+    private LocalDateTime dateOfEntry;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address")
@@ -31,7 +32,7 @@ public class Patient {
     }
 
     public Patient(String name, String lastName, String dni,
-                   LocalDate dateOfEntry, Address address) {
+                   LocalDateTime dateOfEntry, Address address) {
         this.name = name;
         this.lastName = lastName;
         this.dni = dni;
@@ -40,7 +41,7 @@ public class Patient {
     }
 
     public Patient(Long id, String name, String lastName, String dni,
-                   LocalDate dateOfEntry, Address address) {
+                   LocalDateTime dateOfEntry, Address address) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -83,11 +84,11 @@ public class Patient {
         this.dni = dni;
     }
 
-    public LocalDate getDateOfEntry() {
+    public LocalDateTime getDateOfEntry() {
         return dateOfEntry;
     }
 
-    public void setDateOfEntry(LocalDate dateOfEntry) {
+    public void setDateOfEntry(LocalDateTime dateOfEntry) {
         this.dateOfEntry = dateOfEntry;
     }
 
