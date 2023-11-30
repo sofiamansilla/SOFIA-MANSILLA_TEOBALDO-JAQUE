@@ -42,3 +42,27 @@ body {
   button:hover {
     background-color: #c8a8c8;
   }
+
+  .patient_list {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.patient_list th, 
+.patient_list {
+    border: 1px solid #000;
+}
+
+
+.appointment_list{
+  width: 100%;
+  border: 1px solid #000;
+  border-collapse: collapse;
+}
+
+.appointment_list th, 
+.appointment_list {
+  border: 1px solid #000;
+}
+

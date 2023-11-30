@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>
+        Dental Clinic
+    </h1>
+
+    <h2 id="label-edit">Appointments's portal</h2>
+
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Appointment Date and time</th>
+                <th>Patient's name</th>
+                <th>Dentist's name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input id="dateAndTIme" type="text" placeholder="Insert the date of the appointment (dd-MM-yyyy HH:mm:ss)"/>
+                </td>
+                <td>
+                    <input id="patient" type="text" placeholder="Patient's name"/>
+                </td>
+                <td>
+                    <input id="dentist" type="text" placeholder="Dentist's name"/>
+                </td>
+                <td>
+                    <button id="btnSave">Save</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <hr/>
+
+    <h2>Appointment's list</h2>
+
+    <table class="appointment_list">
+        <thead>
+            <tr>
+                <th>Appointment Date and time</th>
+                <th>Patient's name</th>
+                <th>Dentist's name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+   <script src="js/appointments.js"></script>
+
+</body>
+</html>

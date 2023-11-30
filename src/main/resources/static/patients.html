@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Clinic</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>
+        Dental Clinic
+    </h1>
+
+    <h2 id="label-edit">Patients's portal</h2>
+
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Identification number</th>
+                <th>Date of entry</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <input id="name" type="text" placeholder="Name"/>
+                </td>
+                <td>
+                    <input id="lastName" type="text" placeholder="Last Name"/>
+                </td>
+                <td>
+                    <input id="dni" type="text" placeholder="Identification number"/>
+                </td>
+                <td>
+                    <input id="dateOfEntry" type="text" placeholder="Date of entry"/>
+                </td>
+                <td>
+                    <input id="address" type="text" placeholder="Address"/>
+                </td>
+                <td>
+                    <button id="btnSave">Save</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <hr/>
+
+    <h2>Patients's list</h2>
+
+    <table class="patient_list">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Identification number</th>
+                <th>Date of entry</th>
+                <th>Address</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+   <script src="js/patients.js"></script>
+
+</body>
+</html>
