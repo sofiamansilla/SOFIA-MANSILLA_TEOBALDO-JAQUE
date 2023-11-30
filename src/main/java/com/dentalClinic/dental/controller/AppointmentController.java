@@ -1,5 +1,6 @@
 package com.dentalClinic.dental.controller;
 
+import com.dentalClinic.dental.dto.input.appointment.AppointmentInputDto;
 import com.dentalClinic.dental.dto.output.appointment.AppointmentOutputDto;
 import com.dentalClinic.dental.dto.update.AppointmentUpdateInputDto;
 import com.dentalClinic.dental.exceptions.BadRequestException;
@@ -47,7 +48,7 @@ public class AppointmentController {
                     content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<AppointmentOutputDto> registerAppointment(@Valid @RequestBody AppointmentOutputDto appointment) throws BadRequestException {
+    public ResponseEntity<AppointmentOutputDto> registerAppointment(@Valid @RequestBody AppointmentInputDto appointment) throws BadRequestException {
         return new ResponseEntity<>(appointmentService.registerAppointment(appointment),
                 HttpStatus.CREATED);
     }
@@ -93,8 +94,8 @@ public class AppointmentController {
     })
     @GetMapping("/")
     public ResponseEntity<List<AppointmentOutputDto>> listAppointments() {
-        return new ResponseEntity<>(appointmentService.listAppointments()
-                , OK);
+        return new ResponseEntity<>(appointmentService.listAppointments(),
+                HttpStatus.OK);
     }
 
     //PUT - Update Appointment
@@ -142,7 +143,7 @@ public class AppointmentController {
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) throws ResourceNotFoundException {
         appointmentService.deleteAppointment(id);
         return new ResponseEntity<>("Appointment successfully deleted",
-                HttpStatus.NO_CONTENT);
+                HttpStatus.OK);
     }
 
 }

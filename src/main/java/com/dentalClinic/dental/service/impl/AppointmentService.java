@@ -1,7 +1,10 @@
 package com.dentalClinic.dental.service.impl;
 
 import com.dentalClinic.dental.dto.input.appointment.AppointmentInputDto;
+import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.appointment.AppointmentOutputDto;
+import com.dentalClinic.dental.dto.output.appointment.DentistAppointmentOutputDto;
+import com.dentalClinic.dental.dto.output.appointment.PatientAppointmentOutputDto;
 import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.AppointmentUpdateInputDto;
@@ -32,6 +35,7 @@ public class AppointmentService implements IAppointmentService {
     private final PatientService patientService;
 
     private final DentistService dentistService;
+
 
     public AppointmentService(AppointmentRepository appointmentRepository,
                               ModelMapper modelMapper,
@@ -66,28 +70,65 @@ if (appointmentOutputDto != null) {
 
     */
 
-    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointment) throws BadRequestException {
+    @Override
+    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointmentInputDto) throws BadRequestException {
+        AppointmentOutputDto appointmentOutputDto;
 
-        PatientOutputDto patientAppointment =
-                patientService.searchPatientForId(appointment.getPatientOutputDto().getId());
-        DentistOutputDto dentistAppointment =
-                dentistService.searchDentistForId(appointment.getDentistOutputDto().getId());
+        PatientOutputDto patient =
+                patientService.searchPatientForId(appointmentInputDto.getPatientId());
+        DentistOutputDto dentist =
+                dentistService.searchDentistForId(appointmentInputDto.getDentistId());
 
-        if (!isValidPatientAndDentist(patientAppointment, dentistAppointment)) {
-            throw new BadRequestException("Patient or dentist not found");
+        String pacienteNoEnBdd = "El paciente no se encuentra en nuestra base" +
+                " de datos";
+        String odontologoNoEnBdd = "El odontologo no se encuentra en nuestra " +
+                "base de datos";
+
+        if (patient == null || dentist == null) {
+            if (patient == null && dentist == null) {
+                LOGGER.error("El paciente y el odontologo no se encuentran en" +
+                        " nuestra base de datos");
+                throw new BadRequestException("El paciente y el odontologo no" +
+                        " se encuentran en nuestra base de datos");
+            } else if (patient == null) {
+                LOGGER.error(pacienteNoEnBdd);
+                throw new BadRequestException(pacienteNoEnBdd);
+            } else {
+                LOGGER.error(odontologoNoEnBdd);
+                throw new BadRequestException(odontologoNoEnBdd);
+            }
+        } else {
+
+            Appointment newAppointment =
+                    appointmentRepository.save(modelMapper.map(appointmentInputDto,
+                            Appointment.class));
+            appointmentOutputDto = entidadADto(newAppointment);
+
+            LOGGER.info("Nuevo turno registrado con exito: {}",
+                    appointmentOutputDto);
         }
 
-        Appointment appointmentEntity = modelMapper.map(appointment,
-                Appointment.class);
-        Appointment appointmentToPersist =
-                appointmentRepository.save(appointmentEntity);
-
-        AppointmentOutputDto appointmentOutputDto =
-                modelMapper.map(appointmentToPersist,
-                        AppointmentOutputDto.class);
-        LOGGER.info("Appointment created: " + JsonPrinter.toString(appointmentOutputDto));
         return appointmentOutputDto;
     }
+
+    private PatientAppointmentOutputDto patientOutputDtoToOutputAppointmentDto(Long id) {
+        return modelMapper.map(patientService.searchPatientForId(id),
+                PatientAppointmentOutputDto.class);
+    }
+
+    private DentistAppointmentOutputDto dentistOutputDtoToOutputAppointmentDto(Long id) {
+        return modelMapper.map(dentistService.searchDentistForId(id),
+                DentistAppointmentOutputDto.class);
+    }
+
+    private AppointmentOutputDto entidadADto(Appointment appointment) {
+        AppointmentOutputDto appointmentOutputDto = modelMapper.map(appointment,
+                AppointmentOutputDto.class);
+        appointmentOutputDto.setPatientAppointmentOutputDto(patientOutputDtoToOutputAppointmentDto(appointment.getPatient().getId()));
+        appointmentOutputDto.setDentistAppointmentOutputDto(dentistOutputDtoToOutputAppointmentDto(appointment.getDentist().getId()));
+        return appointmentOutputDto;
+    }
+
 
     ;
 
@@ -248,10 +289,6 @@ if (appointmentOutputDto != null) {
         }
 
     }
-
-
-
-
 
 
 }

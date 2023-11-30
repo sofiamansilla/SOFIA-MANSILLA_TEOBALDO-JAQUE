@@ -4,6 +4,7 @@ import com.dentalClinic.dental.dto.input.dentist.DentistInputDto;
 import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
 import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
@@ -13,25 +14,25 @@ import java.time.LocalDateTime;
 public class AppointmentOutputDto {
 
     private Long id;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime dateAndTime;
-    private DentistOutputDto dentistOutputDto;
-    private PatientOutputDto patientOutputDto;
+    private PatientAppointmentOutputDto patientAppointmentOutputDto;
+    private DentistAppointmentOutputDto dentistAppointmentOutputDto;
 
-    public AppointmentOutputDto(Long id) {
-        this.id = id;
+    public AppointmentOutputDto() {
     }
 
-    public AppointmentOutputDto(LocalDateTime dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
-        this.dateAndTime = dateAndTime;
-        this.dentistOutputDto = dentistOutputDto;
-        this.patientOutputDto = patientOutputDto;
-    }
-
-    public AppointmentOutputDto(Long id, LocalDateTime dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
+    public AppointmentOutputDto(Long id, LocalDateTime dateAndTime, PatientAppointmentOutputDto patientAppointmentOutputDto, DentistAppointmentOutputDto dentistAppointmentOutputDto) {
         this.id = id;
         this.dateAndTime = dateAndTime;
-        this.dentistOutputDto = dentistOutputDto;
-        this.patientOutputDto = patientOutputDto;
+        this.patientAppointmentOutputDto = patientAppointmentOutputDto;
+        this.dentistAppointmentOutputDto = dentistAppointmentOutputDto;
+    }
+
+    public AppointmentOutputDto(LocalDateTime dateAndTime, PatientAppointmentOutputDto patientAppointmentOutputDto, DentistAppointmentOutputDto dentistAppointmentOutputDto) {
+        this.dateAndTime = dateAndTime;
+        this.patientAppointmentOutputDto = patientAppointmentOutputDto;
+        this.dentistAppointmentOutputDto = dentistAppointmentOutputDto;
     }
 
     public Long getId() {
@@ -50,19 +51,30 @@ public class AppointmentOutputDto {
         this.dateAndTime = dateAndTime;
     }
 
-    public DentistOutputDto getDentistOutputDto() {
-        return dentistOutputDto;
+    public PatientAppointmentOutputDto getPatientAppointmentOutputDto() {
+        return patientAppointmentOutputDto;
     }
 
-    public void setDentistOutputDto(DentistOutputDto dentistOutputDto) {
-        this.dentistOutputDto = dentistOutputDto;
+    public void setPatientAppointmentOutputDto(PatientAppointmentOutputDto patientAppointmentOutputDto) {
+        this.patientAppointmentOutputDto = patientAppointmentOutputDto;
     }
 
-    public PatientOutputDto getPatientOutputDto() {
-        return patientOutputDto;
+    public DentistAppointmentOutputDto getDentistAppointmentOutputDto() {
+        return dentistAppointmentOutputDto;
     }
 
-    public void setPatientOutputDto(PatientOutputDto patientOutputDto) {
-        this.patientOutputDto = patientOutputDto;
+    public void setDentistAppointmentOutputDto(DentistAppointmentOutputDto dentistAppointmentOutputDto) {
+        this.dentistAppointmentOutputDto = dentistAppointmentOutputDto;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentOutputDto{" +
+                "id=" + id +
+                ", dateAndTime=" + dateAndTime +
+                ", patientAppointmentOutputDto=" + patientAppointmentOutputDto +
+                ", dentistAppointmentOutputDto=" + dentistAppointmentOutputDto +
+                '}';
     }
 }
+
