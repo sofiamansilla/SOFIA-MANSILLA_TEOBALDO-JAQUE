@@ -1,22 +1,17 @@
 package com.dentalClinic.dental.dto.update;
 
-import com.dentalClinic.dental.entity.Address;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PatientUpdateInputDto {
 
 
-    @NotBlank(message = "The ID of the patient must be specified")
+    @NotNull(message = "The ID of the patient must be specified")
     private Long id;
 
     @Size(min = 2, max = 50, message = "Please make sure your name is at " +
@@ -30,7 +25,7 @@ public class PatientUpdateInputDto {
     @NotBlank(message = "The patient's last name must be specified")
     private String lastName;
 
-    @NotBlank(message = "The National Identity Document (DNI) must be " +
+    @NotNull(message = "The National Identity Document (DNI) must be " +
             "specified")
     @Size(min = 8, max = 13, message = "The DNI is invalid. It must be " +
             "between 8 and 13 digits long")

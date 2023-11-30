@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class Dentist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 50)
     private String licenceNumber;

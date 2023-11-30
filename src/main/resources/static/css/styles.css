@@ -1,0 +1,44 @@
+.dentist_list {
+    width: 100%;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.dentist_list th, 
+.dentist_list td {
+    border: 1px solid #000;
+}
+body {
+    background-color: #d8b8d8;
+    color: #887d88;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 3em;
+    margin-top: 0;
+  }
+  
+  h2 {
+    font-size: 2em;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  button {
+    width: 150px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #887d88;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #c8a8c8;
+  }
