@@ -25,16 +25,22 @@ public class AppointmentUpdateInputDto {
 
     @NotNull(message = "A dentist must be specified")
     @Valid
-    private Dentist dentist;
+    private Long dentist;
 
     @NotNull(message = "A patient must be specified")
     @Valid
-    private Patient patient;
+    private Long patient;
 
     public AppointmentUpdateInputDto() {
     }
 
-    public AppointmentUpdateInputDto(Long id, LocalDate dateAndTime, Dentist dentist, Patient patient) {
+    public AppointmentUpdateInputDto(LocalDate dateAndTime, Long dentist, Long patient) {
+        this.dateAndTime = dateAndTime;
+        this.dentist = dentist;
+        this.patient = patient;
+    }
+
+    public AppointmentUpdateInputDto(Long id, LocalDate dateAndTime, Long dentist, Long patient) {
         this.id = id;
         this.dateAndTime = dateAndTime;
         this.dentist = dentist;
@@ -57,19 +63,19 @@ public class AppointmentUpdateInputDto {
         this.dateAndTime = dateAndTime;
     }
 
-    public Dentist getDentist() {
+    public Long getDentist() {
         return dentist;
     }
 
-    public void setDentist(Dentist dentist) {
+    public void setDentist(Long dentist) {
         this.dentist = dentist;
     }
 
-    public Patient getPatient() {
+    public Long getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(Long patient) {
         this.patient = patient;
     }
 }

@@ -2,6 +2,8 @@ package com.dentalClinic.dental.dto.output.appointment;
 
 import com.dentalClinic.dental.dto.input.dentist.DentistInputDto;
 import com.dentalClinic.dental.dto.input.patient.PatientInputDto;
+import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
+import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDateTime;
@@ -12,20 +14,24 @@ public class AppointmentOutputDto {
 
     private Long id;
     private LocalDateTime dateAndTime;
-    private DentistInputDto dentistInputDto;
-    private PatientInputDto patientInputDto;
+    private DentistOutputDto dentistOutputDto;
+    private PatientOutputDto patientOutputDto;
 
-
-    public AppointmentOutputDto() {
+    public AppointmentOutputDto(Long id) {
+        this.id = id;
     }
 
-    public AppointmentOutputDto(Long id, LocalDateTime dateAndTime,
-                                DentistInputDto dentistInputDto,
-                                PatientInputDto patientInputDto) {
+    public AppointmentOutputDto(LocalDateTime dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
+        this.dateAndTime = dateAndTime;
+        this.dentistOutputDto = dentistOutputDto;
+        this.patientOutputDto = patientOutputDto;
+    }
+
+    public AppointmentOutputDto(Long id, LocalDateTime dateAndTime, DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
         this.id = id;
         this.dateAndTime = dateAndTime;
-        this.dentistInputDto = dentistInputDto;
-        this.patientInputDto = patientInputDto;
+        this.dentistOutputDto = dentistOutputDto;
+        this.patientOutputDto = patientOutputDto;
     }
 
     public Long getId() {
@@ -44,22 +50,19 @@ public class AppointmentOutputDto {
         this.dateAndTime = dateAndTime;
     }
 
-    public DentistInputDto getDentistInputDto() {
-        return dentistInputDto;
+    public DentistOutputDto getDentistOutputDto() {
+        return dentistOutputDto;
     }
 
-    public void setDentistInputDto(DentistInputDto dentistInputDto) {
-        this.dentistInputDto = dentistInputDto;
+    public void setDentistOutputDto(DentistOutputDto dentistOutputDto) {
+        this.dentistOutputDto = dentistOutputDto;
     }
 
-    public PatientInputDto getPatientInputDto() {
-        return patientInputDto;
+    public PatientOutputDto getPatientOutputDto() {
+        return patientOutputDto;
     }
 
-    public void setPatientInputDto(PatientInputDto patientInputDto) {
-        this.patientInputDto = patientInputDto;
+    public void setPatientOutputDto(PatientOutputDto patientOutputDto) {
+        this.patientOutputDto = patientOutputDto;
     }
-
-
-
 }
