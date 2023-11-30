@@ -16,54 +16,60 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
     public class AppointmentInputDto {
 
-        @FutureOrPresent(message = "The date must be on or after today.")
-        @NotNull(message = "The date and time of the appointment are needed, " +
-                "please use the format: dd-MM-yyyy HH:mm:ss")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-        private LocalDateTime dateAndTime;
+    @FutureOrPresent(message = "The date must be on or after today.")
+    @NotNull(message = "The date and time of the appointment are needed, " +
+            "please use the format: dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    private LocalDateTime dateAndTime;
 
-        @NotNull(message = "A dentist must be specified")
-        @NotBlank(message = "A dentist must be specified")
-        @Valid
-        private DentistOutputDto dentistOutputDto;
+    @NotNull(message = "A dentist must be specified")
+    @NotBlank(message = "A dentist must be specified")
+    @Valid
+    private Long dentistId;
+    @NotNull(message = "A patient must be specified")
+    @NotBlank(message = "A patient must be specified")
+    @Valid
+    private Long patientId;
 
-        @NotNull(message = "A patient must be specified")
-        @NotBlank(message = "A patient must be specified")
-        @Valid
-        private PatientOutputDto patientOutputDto;
-
-
-        public AppointmentInputDto(LocalDateTime dateAndTime,
-                                   DentistOutputDto dentistOutputDto, PatientOutputDto patientOutputDto) {
-            this.dateAndTime = dateAndTime;
-            this.dentistOutputDto = dentistOutputDto;
-            this.patientOutputDto = patientOutputDto;
-        }
-
-        public AppointmentInputDto() {
-        }
-
-        public LocalDateTime getDateAndTime() {
-            return dateAndTime;
-        }
-
-        public void setDateAndTime(LocalDateTime dateAndTime) {
-            this.dateAndTime = dateAndTime;
-        }
-
-        public DentistOutputDto getDentistOutputDto() {
-            return dentistOutputDto;
-        }
-
-        public void setDentistOutputDto(DentistOutputDto dentistOutputDto) {
-            this.dentistOutputDto = dentistOutputDto;
-        }
-
-        public PatientOutputDto getPatientOutputDto() {
-            return patientOutputDto;
-        }
-
-        public void setPatientOutputDto(PatientOutputDto patientOutputDto) {
-            this.patientOutputDto = patientOutputDto;
-        }
+    public AppointmentInputDto() {
     }
+
+    public AppointmentInputDto(LocalDateTime dateAndTime, Long dentistId, Long patientId) {
+        this.dateAndTime = dateAndTime;
+        this.dentistId = dentistId;
+        this.patientId = patientId;
+    }
+
+    public LocalDateTime getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(LocalDateTime dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
+    public Long getDentistId() {
+        return dentistId;
+    }
+
+    public void setDentistId(Long dentistId) {
+        this.dentistId = dentistId;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentInputDto{" +
+                "dateAndTime=" + dateAndTime +
+                ", dentistId=" + dentistId +
+                ", patientId=" + patientId +
+                '}';
+    }
+}

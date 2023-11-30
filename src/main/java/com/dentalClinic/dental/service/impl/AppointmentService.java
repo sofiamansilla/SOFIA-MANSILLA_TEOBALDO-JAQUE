@@ -1,5 +1,6 @@
 package com.dentalClinic.dental.service.impl;
 
+import com.dentalClinic.dental.dto.input.appointment.AppointmentInputDto;
 import com.dentalClinic.dental.dto.output.appointment.AppointmentOutputDto;
 import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
@@ -65,7 +66,7 @@ if (appointmentOutputDto != null) {
 
     */
 
-    public AppointmentOutputDto registerAppointment(@Valid AppointmentOutputDto appointment) throws BadRequestException {
+    public AppointmentOutputDto registerAppointment(AppointmentInputDto appointment) throws BadRequestException {
 
         PatientOutputDto patientAppointment =
                 patientService.searchPatientForId(appointment.getPatientOutputDto().getId());

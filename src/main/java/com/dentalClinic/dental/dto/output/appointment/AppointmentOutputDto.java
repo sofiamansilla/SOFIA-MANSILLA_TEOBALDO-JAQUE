@@ -60,11 +60,6 @@ public class AppointmentOutputDto {
         this.patientInputDto = patientInputDto;
     }
 
-    public AppointmentOutputDto getPatientOutputDto() {
-        return null;
-    };
 
-    public AppointmentOutputDto getDentistOutputDto() {
-        return null;
-    };
+
 }
