@@ -9,6 +9,8 @@ import com.dentalClinic.dental.dto.output.dentist.DentistOutputDto;
 import com.dentalClinic.dental.dto.output.patient.PatientOutputDto;
 import com.dentalClinic.dental.dto.update.AppointmentUpdateInputDto;
 import com.dentalClinic.dental.entity.Appointment;
+import com.dentalClinic.dental.entity.Dentist;
+import com.dentalClinic.dental.entity.Patient;
 import com.dentalClinic.dental.exceptions.BadRequestException;
 import com.dentalClinic.dental.exceptions.ResourceNotFoundException;
 import com.dentalClinic.dental.repository.AppointmentRepository;
@@ -75,9 +77,9 @@ if (appointmentOutputDto != null) {
         AppointmentOutputDto appointmentOutputDto;
 
         PatientOutputDto patient =
-                patientService.searchPatientForId(appointmentInputDto.getPatientId());
+                patientService.searchPatientForId(appointmentInputDto.getPatient());
         DentistOutputDto dentist =
-                dentistService.searchDentistForId(appointmentInputDto.getDentistId());
+                dentistService.searchDentistForId(appointmentInputDto.getDentist());
 
         String pacienteNoEnBdd = "El paciente no se encuentra en nuestra base" +
                 " de datos";
@@ -99,15 +101,19 @@ if (appointmentOutputDto != null) {
             }
         } else {
 
+            Patient patient2 = modelMapper.map(patient, Patient.class);
+            Dentist dentist2 = modelMapper.map(dentist, Dentist.class);
+
             Appointment newAppointment =
                     appointmentRepository.save(modelMapper.map(appointmentInputDto,
                             Appointment.class));
+            newAppointment.setPatient(patient2);
+            newAppointment.setDentist(dentist2);
             appointmentOutputDto = entidadADto(newAppointment);
 
             LOGGER.info("Nuevo turno registrado con exito: {}",
                     appointmentOutputDto);
         }
-
         return appointmentOutputDto;
     }
 

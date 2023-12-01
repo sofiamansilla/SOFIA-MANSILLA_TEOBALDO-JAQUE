@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-    public class AppointmentInputDto {
+public class AppointmentInputDto {
 
     @FutureOrPresent(message = "The date must be on or after today.")
     @NotNull(message = "The date and time of the appointment are needed, " +
@@ -25,19 +25,19 @@ import java.time.LocalDateTime;
     @NotNull(message = "A dentist must be specified")
     @NotBlank(message = "A dentist must be specified")
     @Valid
-    private Long dentistId;
+    private Long dentist;
     @NotNull(message = "A patient must be specified")
     @NotBlank(message = "A patient must be specified")
     @Valid
-    private Long patientId;
+    private Long patient;
 
     public AppointmentInputDto() {
     }
 
-    public AppointmentInputDto(LocalDateTime dateAndTime, Long dentistId, Long patientId) {
+    public AppointmentInputDto(LocalDateTime dateAndTime, Long dentist, Long patient) {
         this.dateAndTime = dateAndTime;
-        this.dentistId = dentistId;
-        this.patientId = patientId;
+        this.dentist = dentist;
+        this.patient = patient;
     }
 
     public LocalDateTime getDateAndTime() {
@@ -48,28 +48,28 @@ import java.time.LocalDateTime;
         this.dateAndTime = dateAndTime;
     }
 
-    public Long getDentistId() {
-        return dentistId;
+    public Long getDentist() {
+        return dentist;
     }
 
-    public void setDentistId(Long dentistId) {
-        this.dentistId = dentistId;
+    public void setDentist(Long dentist) {
+        this.dentist = dentist;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Long getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(Long patient) {
+        this.patient = patient;
     }
 
     @Override
     public String toString() {
         return "AppointmentInputDto{" +
                 "dateAndTime=" + dateAndTime +
-                ", dentistId=" + dentistId +
-                ", patientId=" + patientId +
+                ", dentist=" + dentist +
+                ", patient=" + patient +
                 '}';
     }
 }

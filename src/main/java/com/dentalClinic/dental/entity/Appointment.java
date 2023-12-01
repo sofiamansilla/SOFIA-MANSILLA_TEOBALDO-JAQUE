@@ -21,9 +21,8 @@ public class Appointment {
     private Patient patient;
 
 
-    /*Builders (an empty one, a full one and another without id*/
 
-    public Appointment() {
+            public Appointment() {
     }
 
     public Appointment(LocalDateTime dateAndTime, Dentist dentist, Patient patient) {
@@ -39,7 +38,6 @@ public class Appointment {
         this.patient = patient;
     }
 
-    /*Getter & Setters*/
 
     public Long getId() {
         return id;
@@ -73,7 +71,7 @@ public class Appointment {
         this.patient = patient;
     }
 
-    /*To String*/
+
 
     @Override
     public String toString() {
@@ -84,6 +82,5 @@ public class Appointment {
                 ", patient=" + patient +
                 '}';
     }
-
 
 }
