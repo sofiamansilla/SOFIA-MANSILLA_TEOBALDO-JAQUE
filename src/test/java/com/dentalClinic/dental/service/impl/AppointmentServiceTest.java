@@ -67,7 +67,7 @@ class AppointmentServiceTest {
 
 
     @Test
-    void adeberiaCrearUnAppointmentConId1() throws BadRequestException {
+    void shouldCreateAnAppointmentWithId1() throws BadRequestException {
         AppointmentInputDto appointmentInput =new AppointmentInputDto(LocalDateTime.of(2024,1,1,11,1,1),dentistOutput.getId(),patientOutput.getId());
         AppointmentOutputDto appointment = appointmentService.registerAppointment(appointmentInput);
 
