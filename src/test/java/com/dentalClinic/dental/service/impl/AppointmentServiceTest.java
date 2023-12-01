@@ -54,8 +54,9 @@ class AppointmentServiceTest {
     */
     @BeforeEach
     void setUp() {
-        patient1 = new PatientInputDto("Testeo", "Caicedo", "ASDFGHJKCG", LocalDate.of(2024, 01, 01),
-                new AddressInputDto("calle", 12345, "Santiago", "Santiago"));
+        patient1 = new PatientInputDto("Necho", "Bermudez", "17AAA444A",
+                LocalDate.of(2023, 01, 01),
+                new AddressInputDto("elm", 12345, "Santiago", "Santiago"));
         patientOutput = patientService.registerPatient(patient1);
 
         dentist1 = new DentistInputDto("WERTYUIOIUYTR", "Jhon", "Perezeition");
@@ -72,4 +73,15 @@ class AppointmentServiceTest {
         AppointmentOutputDto appointment = appointmentService.registerAppointment(appointmentInput);
 
         assertTrue(appointment.getId() == 1L);
-    }};
+    }
+@Test
+    void shouldFindAnAppointmentWithId1()  {
+            AppointmentOutputDto findAppointment =
+                    appointmentService.searchAppointmentForId(1L);
+            assertNotNull(findAppointment, "El Appointment es nulo");
+            assertEquals(1, findAppointment.getId(), "El ID del Appointment encontrado " +
+                    "no" +
+                    " coincide con el ID esperado");
+            };
+
+};
